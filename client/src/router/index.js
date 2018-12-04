@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import SearchClient from '@/components/SearchClient'
+import Home from '@/components/Home.vue'
 
 Vue.use(Router)
 
@@ -9,8 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'SearchClient',
-      component: SearchClient
+      name: 'Home',
+      component: Home
     }
   ]
 })
