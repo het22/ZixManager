@@ -4,17 +4,19 @@
   <nav class="navbar has-shadow">
     <div class="container" style="height: inherited">
       <div class="navbar-brand">
-        <a class="navbar-item" href="../">
-          <span class="icon">
-            <i class="fas fa-home fa-lg"></i>
-          </span>
-          <span class="title">
-            ZIX
-          </span>
-          <span class="subtitle">
-            manager
-          </span>
-        </a>
+        <router-link to="/">
+          <a class="navbar-item">
+            <span class="icon">
+              <i class="fas fa-home fa-lg"></i>
+            </span>
+            <span class="title">
+              ZIX
+            </span>
+            <span class="subtitle">
+              manager
+            </span>
+          </a>
+        </router-link>
       </div>
     </div>
   </nav>
@@ -27,32 +29,33 @@
         <p class="menu-label">
           General
         </p>
-        <a href="../" class="item" v-bind:class="{active : isActive}">
-          <span class="icon">
-            <i class="fas fa-file-alt"></i>
-          </span>
-          <span class="name">
-            Main
-          </span>
-        </a>
+        <router-link to="/">
+          <a class="item" v-bind:class="{active : isActive}">
+            <span class="icon">
+              <i class="fas fa-file-alt"></i>
+            </span>
+            <span class="name">
+              Main
+            </span>
+          </a>
+        </router-link>
       </div>
       <!-- Menu -->
       <div class="menus">
         <p class="menu-label">
           Menu
         </p>
-        <router-link to="/client">
+        <router-link to="/Customer">
           <a class="item">
             <span class="icon">
               <i class="fas fa-user"></i>
             </span>
             <span class="name">
-              Client
+              Customer
             </span>
           </a>
         </router-link>
-
-        <a href="../cost" class="item">
+        <a class="item">
           <span class="icon">
             <i class="fas fa-coins"></i>
           </span>
@@ -60,7 +63,7 @@
             Cost
           </span>
         </a>
-        <a href="../notification" class="item">
+        <a class="item">
           <span class="icon">
             <i class="fas fa-bell"></i>
           </span>
@@ -72,14 +75,18 @@
     </div>
     <!-- content -->
     <div class="column content hero is-fullheight">
-
+      <Customer/>
     </div>
   </section>
 </div>
 </template>
 
 <script>
+import Customer from './Customer.vue'
 export default {
+  components: {
+    Customer
+  },
   data() {
     return {
       isActive: true
@@ -142,7 +149,18 @@ export default {
   background-color: #00D1B3;
   border-radius: 4px;
   color: #FFFFFF;
+}
 
+.sidemenu .menus .item.active:hover {
+  background-color: #00D1B3;
+  border-radius: 4px;
+  color: #FFFFFF;
+}
+
+.sidemenu .menus .item:hover {
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  color: #363636;
 }
 
 .content {

@@ -4,17 +4,19 @@
   <nav class="navbar has-shadow">
     <div class="container" style="height: inherited">
       <div class="navbar-brand">
-        <a class="navbar-item" href="../">
-          <span class="icon">
-            <i class="fas fa-home fa-lg"></i>
-          </span>
-          <span class="title">
-            ZIX
-          </span>
-          <span class="subtitle">
-            manager
-          </span>
-        </a>
+        <router-link to="/">
+          <a class="navbar-item">
+            <span class="icon">
+              <i class="fas fa-home fa-lg"></i>
+            </span>
+            <span class="title">
+              ZIX
+            </span>
+            <span class="subtitle">
+              manager
+            </span>
+          </a>
+        </router-link>
       </div>
     </div>
   </nav>
