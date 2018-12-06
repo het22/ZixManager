@@ -14,6 +14,11 @@ export default new Router({
       component: DashBoard
     },
     {
+      path: '/menu/:content_id',
+      name: 'DashBoard',
+      component: DashBoard
+    },
+    {
       path: '*',
       name: 'NotFound',
       component: NotFound

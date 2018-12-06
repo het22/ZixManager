@@ -1,25 +1,7 @@
 <template lang="html">
 <div>
   <!-- navigation bar(always top) -->
-  <nav class="navbar has-shadow">
-    <div class="container" style="height: inherited">
-      <div class="navbar-brand">
-        <router-link to="/">
-          <a class="navbar-item">
-            <span class="icon">
-              <i class="fas fa-home fa-lg"></i>
-            </span>
-            <span class="title">
-              ZIX
-            </span>
-            <span class="subtitle">
-              manager
-            </span>
-          </a>
-        </router-link>
-      </div>
-    </div>
-  </nav>
+  <Navbar/>
   <!-- columns -->
   <section class="columns">
     <!-- sidemenu -->
@@ -30,12 +12,12 @@
           General
         </p>
         <router-link to="/">
-          <a class="item" v-bind:class="{active : isActive}">
+          <a class="item" v-bind:class="{active : current_content == ''}">
             <span class="icon">
-              <i class="fas fa-file-alt"></i>
+              <i class="fas fa-home"></i>
             </span>
             <span class="name">
-              Main
+              Home
             </span>
           </a>
         </router-link>
@@ -45,8 +27,8 @@
         <p class="menu-label">
           Menu
         </p>
-        <router-link to="/Customer">
-          <a class="item">
+        <router-link to="/menu/customer">
+          <a class="item" v-bind:class="{active : current_content == 'customer'}">
             <span class="icon">
               <i class="fas fa-user"></i>
             </span>
@@ -55,67 +37,76 @@
             </span>
           </a>
         </router-link>
-        <a class="item">
-          <span class="icon">
-            <i class="fas fa-coins"></i>
-          </span>
-          <span class="name">
-            Cost
-          </span>
-        </a>
-        <a class="item">
-          <span class="icon">
-            <i class="fas fa-bell"></i>
-          </span>
-          <span class="name">
-            Notification
-          </span>
-        </a>
+        <router-link to="/menu/cost">
+          <a class="item" v-bind:class="{active : current_content == 'cost'}">
+            <span class="icon">
+              <i class="fas fa-coins"></i>
+            </span>
+            <span class="name">
+              Cost
+            </span>
+          </a>
+        </router-link>
+        <router-link to="/menu/notification">
+          <a class="item" v-bind:class="{active : current_content == 'notification'}">
+            <span class="icon">
+              <i class="fas fa-bell"></i>
+            </span>
+            <span class="name">
+              Notification
+            </span>
+          </a>
+        </router-link>
       </div>
     </div>
     <!-- content -->
     <div class="column content hero is-fullheight">
-      <Customer/>
+      <div v-if="current_content == 'customer'">
+        <Customer/>
+      </div>
+      <div v-else-if="current_content == 'cost'">
+        <Cost/>
+      </div>
+      <div v-else-if="current_content == 'notification'">
+        <Notification/>
+      </div>
+      <div v-else>
+        <Home/>
+      </div>
     </div>
   </section>
 </div>
 </template>
 
 <script>
+import Navbar from './Navbar.vue'
+import Home from './Home.vue'
 import Customer from './Customer.vue'
+import Cost from './Cost.vue'
+import Notification from './Notification.vue'
 export default {
   components: {
-    Customer
+    Navbar,
+    Home,
+    Customer,
+    Cost,
+    Notification
   },
   data() {
     return {
       isActive: true
+    }
+  },
+  computed: {
+    current_content() {
+      const content = this.$route.params.content_id;
+      return (typeof content === 'undefined') ? '' : content;
     }
   }
 }
 </script>
 
 <style lang="css">
-.navbar {
-  background-color: #363636;
-  color: #FFFFFF;
-}
-
-.navbar-item .icon {
-  color: #FFFFFF;
-  margin-right: 10px;
-}
-
-.navbar-item .title {
-  color: #FFFFFF;
-  margin-bottom: 0;
-}
-
-.navbar-item .subtitle {
-  color: #FFFFFF;
-  font-weight: bold;
-}
-
 .sidemenu {
   background-color: #363636;
   padding-right: 0px;
