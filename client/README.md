@@ -1,6 +1,6 @@
 # client
 
-> zix manager client side application
+> Zix Manager Client Side Proto
 
 ## Build Setup
 

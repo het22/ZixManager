@@ -3,7 +3,7 @@ const app = new Koa();
 const serve = require('koa-static');
 
 // index page
-app.use(serve(__dirname + '/../client/dist'));
+app.use(serve(__dirname + '/public'));
 
 // router
 const router = require('./routes');
