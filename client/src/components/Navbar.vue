@@ -1,21 +1,20 @@
 <template lang="html">
 <nav class="navbar has-shadow">
-  <div class="container" style="height: inherited">
-    <div class="navbar-brand">
-      <router-link to="/">
-        <a class="navbar-item">
-          <span class="icon">
-            <i class="fab fa-fort-awesome-alt fa-2x"></i>
-          </span>
-          <span class="title">
-            ZIX
-          </span>
-          <span class="subtitle">
-            manager
-          </span>
-        </a>
-      </router-link>
-    </div>
+  <div class="navbar-brand">
+    <!-- logo -->
+    <router-link to="/">
+      <a class="navbar-item">
+        <span class="icon">
+          <i class="far fa-snowflake fa-2x"></i>
+        </span>
+        <span class="title">
+          ZIX
+        </span>
+        <span class="subtitle">
+          manager
+        </span>
+      </a>
+    </router-link>
   </div>
 </nav>
 </template>

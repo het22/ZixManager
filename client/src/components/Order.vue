@@ -1,26 +1,22 @@
 <template lang="html">
-<div>
-  <!-- navigation bar(always top) -->
-  <Navbar/>
+<div class="order-wrapper">
   <div class="title is-fullheight">
-    <i class="fas fa-exclamation-triangle"></i>
-    Page Not Found
+    <i class="fas fa-file-alt"></i>
   </div>
 </div>
 </template>
 
 <script>
-import Navbar from './Navbar.vue'
 export default {
-  components: {
-    Navbar
-  }
 }
 </script>
 
 <style lang="css">
-.title.is-fullheight {
+.order-wrapper {
   text-align: center;
+}
+
+.title.is-fullheight {
   height: 200px;
   line-height: 200px;
 }

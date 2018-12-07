@@ -13,7 +13,7 @@ export default {
 
 <style lang="css">
 .notification-wrapper {
-
+  text-align: center;
 }
 
 .title.is-fullheight {

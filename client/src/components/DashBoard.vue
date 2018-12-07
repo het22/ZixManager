@@ -37,6 +37,16 @@
             </span>
           </a>
         </router-link>
+        <router-link :to="{name: 'Order'}">
+          <a class="item" v-bind:class="{active: this.$route.name=='Order'}">
+            <span class="icon">
+              <i class="fas fa-file-alt"></i>
+            </span>
+            <span class="name">
+              Order
+            </span>
+          </a>
+        </router-link>
         <router-link :to="{name: 'Cost'}">
           <a class="item" v-bind:class="{active: this.$route.name=='Cost'}">
             <span class="icon">
