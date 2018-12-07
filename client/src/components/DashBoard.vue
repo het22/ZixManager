@@ -12,7 +12,7 @@
           General
         </p>
         <router-link to="/">
-          <a class="item" v-bind:class="{active : current_content == ''}">
+          <a class="item" v-bind:class="{active : this.$route.path=='/'}">
             <span class="icon">
               <i class="fas fa-home"></i>
             </span>
@@ -27,8 +27,8 @@
         <p class="menu-label">
           Menu
         </p>
-        <router-link to="/menu/customer">
-          <a class="item" v-bind:class="{active : current_content == 'customer'}">
+        <router-link to="/customer">
+          <a class="item" v-bind:class="{active : this.$route.path=='/customer'}">
             <span class="icon">
               <i class="fas fa-user"></i>
             </span>
@@ -37,8 +37,8 @@
             </span>
           </a>
         </router-link>
-        <router-link to="/menu/cost">
-          <a class="item" v-bind:class="{active : current_content == 'cost'}">
+        <router-link to="/cost">
+          <a class="item" v-bind:class="{active : this.$route.path=='/cost'}">
             <span class="icon">
               <i class="fas fa-coins"></i>
             </span>
@@ -47,8 +47,8 @@
             </span>
           </a>
         </router-link>
-        <router-link to="/menu/notification">
-          <a class="item" v-bind:class="{active : current_content == 'notification'}">
+        <router-link to="/notification">
+          <a class="item" v-bind:class="{active : this.$route.path=='/notification'}">
             <span class="icon">
               <i class="fas fa-bell"></i>
             </span>
@@ -61,18 +61,7 @@
     </div>
     <!-- content -->
     <div class="column content hero is-fullheight">
-      <div v-if="current_content == 'customer'">
-        <Customer/>
-      </div>
-      <div v-else-if="current_content == 'cost'">
-        <Cost/>
-      </div>
-      <div v-else-if="current_content == 'notification'">
-        <Notification/>
-      </div>
-      <div v-else>
-        <Home/>
-      </div>
+      <router-view/>
     </div>
   </section>
 </div>
@@ -80,27 +69,13 @@
 
 <script>
 import Navbar from './Navbar.vue'
-import Home from './Home.vue'
-import Customer from './Customer.vue'
-import Cost from './Cost.vue'
-import Notification from './Notification.vue'
 export default {
   components: {
     Navbar,
-    Home,
-    Customer,
-    Cost,
-    Notification
   },
   data() {
     return {
       isActive: true
-    }
-  },
-  computed: {
-    current_content() {
-      const content = this.$route.params.content_id;
-      return (typeof content === 'undefined') ? '' : content;
     }
   }
 }

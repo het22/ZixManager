@@ -2,8 +2,11 @@
 <div class="customer-wrapper">
   <!-- search bar -->
   <div class="field has-addons">
-    <div class="control">
+    <div class="control has-icons-left">
       <input class="input" type="text" name="customer_name" placeholder="Enter Customer Name" v-model="keyword" v-on:keyup.enter="search" v-on:input="keyword_changed">
+      <span class="icon is-left">
+        <i class="fas fa-user"></i>
+      </span>
     </div>
     <div class="control">
       <div class="button" v-on:click="search">
@@ -87,18 +90,18 @@ export default {
   margin-left: 10px;
 }
 
-.input {
+.control .input {
   width: 300px;
 }
 
-.button {
+.control .button {
   background-color: #00D1B3;
   border-color: #00D1B3;
   color: #FFFFFF;
   font-weight: 600;
 }
 
-.button:hover {
+.control .button:hover {
   border-color: #00D1B3;
   color: lightgrey;
 }
