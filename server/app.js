@@ -1,6 +1,10 @@
 const Koa = require('koa');
+const historyApiFallback = require('koa2-connect-history-api-fallback');
 const app = new Koa();
 const serve = require('koa-static');
+
+// history mode
+app.use(historyApiFallback());
 
 // index page
 app.use(serve(__dirname + '/public'));

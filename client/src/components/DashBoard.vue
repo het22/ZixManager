@@ -11,8 +11,8 @@
         <p class="menu-label">
           General
         </p>
-        <router-link to="/">
-          <a class="item" v-bind:class="{active : this.$route.path=='/'}">
+        <router-link :to="{name: 'Home'}">
+          <a class="item" v-bind:class="{active: this.$route.path=='/'}">
             <span class="icon">
               <i class="fas fa-home"></i>
             </span>
@@ -27,8 +27,8 @@
         <p class="menu-label">
           Menu
         </p>
-        <router-link to="/customer">
-          <a class="item" v-bind:class="{active : this.$route.path=='/customer'}">
+        <router-link :to="{name: 'Customer'}">
+          <a class="item" v-bind:class="{active: this.$route.path=='/customer'}">
             <span class="icon">
               <i class="fas fa-user"></i>
             </span>
@@ -37,8 +37,8 @@
             </span>
           </a>
         </router-link>
-        <router-link to="/cost">
-          <a class="item" v-bind:class="{active : this.$route.path=='/cost'}">
+        <router-link :to="{name: 'Cost'}">
+          <a class="item" v-bind:class="{active: this.$route.path=='/cost'}">
             <span class="icon">
               <i class="fas fa-coins"></i>
             </span>
@@ -47,8 +47,8 @@
             </span>
           </a>
         </router-link>
-        <router-link to="/notification">
-          <a class="item" v-bind:class="{active : this.$route.path=='/notification'}">
+        <router-link :to="{name: 'Notification'}">
+          <a class="item" v-bind:class="{active: this.$route.path=='/notification'}">
             <span class="icon">
               <i class="fas fa-bell"></i>
             </span>

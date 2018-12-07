@@ -10,6 +10,7 @@ import Notification from '@/components/Notification.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -17,18 +18,22 @@ export default new Router({
       children: [
         {
           path: '/',
+          name: 'Home',
           component: Home
         },
         {
           path: '/customer',
+          name: 'Customer',
           component: Customer
         },
         {
           path: '/cost',
+          name: 'Cost',
           component: Cost
         },
         {
           path: '/notification',
+          name: 'Notification',
           component: Notification
         },
       ]
