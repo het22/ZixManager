@@ -3,7 +3,7 @@
   <!-- search bar -->
   <div class="field has-addons">
     <div class="control has-icons-left">
-      <input class="input" type="text" name="customer_name" placeholder="Enter Customer Name" v-model="keyword" v-on:keyup.enter="search" v-on:input="keyword_changed">
+      <input class="input" type="text" name="customer_name" placeholder="Enter Customer Name" v-model="keyword" v-on:keyup.enter="search" v-on:input="keywordChanged">
       <span class="icon is-left">
         <i class="fas fa-user"></i>
       </span>
@@ -25,8 +25,8 @@
         <th>Remark</th>
       </tr>
     </thead>
-    <tbody v-if="customers_show.length!=0">
-      <tr v-for="customer in customers_show" :key="customer.id">
+    <tbody v-if="customers.length!=0">
+      <tr v-for="customer in customers" :key="customer.id" v-on:click="selectCell(customer.id)">
         <th>{{customer.id}}</th>
         <td>{{customer.name}}</td>
         <td>{{customer.phone}}</td>
@@ -35,7 +35,8 @@
       </tr>
     </tbody>
   </table>
-  <div class="empty" v-if="customers_show.length==0">
+  <!-- empty -->
+  <div class="empty" v-if="customers.length==0">
     <span class="icon">
       <i class="fas fa-table"></i>
     </span>
@@ -52,34 +53,41 @@ export default {
     return {
       keyword: '',
       customers: [],
-      customers_show: []
+      _customers: []
     }
+  },
+  created() {
+    this.fetchCustomerData();
   },
   methods: {
     search() {
       console.log('search button clicked.');
     },
-    keyword_changed(e) {
+    keywordChanged(e) {
       this.keyword = e.target.value;
-      if (this.keyword=='') {
-        this.customers_show = this.customers;
+      if (this.keyword == '') {
+        this.customers = this._customers;
       } else {
-        this.customers_show = this.customers.filter(customer => customer.name.toLowerCase().indexOf(this.keyword.toLowerCase()) !== -1);
+        this.customers = this._customers.filter(customer => customer.name.toLowerCase().indexOf(this.keyword.toLowerCase()) !== -1);
       }
     },
-    request_customer_all() {
+    fetchCustomerData() {
       console.log('customer infor requested');
       this.$http.get('/article/customer')
         .then((res) => {
           const data = res.data;
-          this.customers = data;
-          this.keyword_changed({'target':{'value':''}});
+          this._customers = data;
+          this.keywordChanged({
+            'target': {
+              'value': ''
+            }
+          });
           console.log('customer infor loaded');
         })
+    },
+    selectCell(id) {
+      this.$router.push({name: 'CustomerDetail', params: {customer_id: id}});
     }
-  },
-  beforeMount() {
-    this.request_customer_all();
   }
 }
 </script>
@@ -90,23 +98,23 @@ export default {
   margin-left: 10px;
 }
 
-.control .input {
+.customer-wrapper .control .input {
   width: 300px;
 }
 
-.control .button {
+.customer-wrapper .control .button {
   background-color: #00D1B3;
   border-color: #00D1B3;
   color: #FFFFFF;
   font-weight: 600;
 }
 
-.control .button:hover {
+.customer-wrapper .control .button:hover {
   border-color: #00D1B3;
   color: lightgrey;
 }
 
-.empty {
+.customer-wrapper .empty {
   font-weight: bold;
   color: grey;
 }

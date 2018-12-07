@@ -12,7 +12,7 @@
           General
         </p>
         <router-link :to="{name: 'Home'}">
-          <a class="item" v-bind:class="{active: this.$route.path=='/'}">
+          <a class="item" v-bind:class="{active: this.$route.name=='Home'}">
             <span class="icon">
               <i class="fas fa-home"></i>
             </span>
@@ -28,7 +28,7 @@
           Menu
         </p>
         <router-link :to="{name: 'Customer'}">
-          <a class="item" v-bind:class="{active: this.$route.path=='/customer'}">
+          <a class="item" v-bind:class="{active: this.$route.name=='Customer' || this.$route.name=='CustomerDetail'}">
             <span class="icon">
               <i class="fas fa-user"></i>
             </span>
@@ -38,7 +38,7 @@
           </a>
         </router-link>
         <router-link :to="{name: 'Cost'}">
-          <a class="item" v-bind:class="{active: this.$route.path=='/cost'}">
+          <a class="item" v-bind:class="{active: this.$route.name=='Cost'}">
             <span class="icon">
               <i class="fas fa-coins"></i>
             </span>
@@ -48,7 +48,7 @@
           </a>
         </router-link>
         <router-link :to="{name: 'Notification'}">
-          <a class="item" v-bind:class="{active: this.$route.path=='/notification'}">
+          <a class="item" v-bind:class="{active: this.$route.name=='Notification'}">
             <span class="icon">
               <i class="fas fa-bell"></i>
             </span>
@@ -77,6 +77,9 @@ export default {
     return {
       isActive: true
     }
+  },
+  created() {
+    console.log(this.$route.path);
   }
 }
 </script>
@@ -111,6 +114,12 @@ export default {
   color: #afb8c3;
 }
 
+.sidemenu .menus .item:hover {
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  color: #363636;
+}
+
 .sidemenu .menus .item.active {
   background-color: #00D1B3;
   border-radius: 4px;
@@ -121,12 +130,6 @@ export default {
   background-color: #00D1B3;
   border-radius: 4px;
   color: #FFFFFF;
-}
-
-.sidemenu .menus .item:hover {
-  background-color: #FFFFFF;
-  border-radius: 4px;
-  color: #363636;
 }
 
 .content {

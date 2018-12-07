@@ -5,19 +5,24 @@ const router = new Router({
 const dbpool = require('../dbpool.js');
 
 router.get('/customer', async (ctx, next) => {
-  const name = ctx.query.name;
   const client = ctx.request.ip;
-  console.log("server: client("+client+") request.(customer_all)");
-  ctx.body = await request_customer_all();
+  console.log("server: client("+client+") request.(/customer)");
+  ctx.body = await fetch('SELECT * FROM customer')
 });
 
-const request_customer_all = async () => {
+router.get('/customer/:id', async (ctx, next) => {
+  const id = ctx.params.id;
+  const client = ctx.request.ip;
+  console.log("server: client("+client+") request.(/customer/"+id+")");
+  ctx.body = await fetch('SELECT * FROM customer WHERE id='+id+'')
+});
+
+async function fetch(query) {
   // try database connection
   try {
     const connection = await dbpool.getConnection(async conn => conn);
     // try query
     try {
-      const query = 'SELECT * FROM customer';
       const res = await connection.query(query);
       connection.release();
       // check query result
@@ -25,7 +30,7 @@ const request_customer_all = async () => {
         console.log('db: query result is empty.');
         return false;
       } else {
-        console.log('db: query result(request_customer_all) is returned.');
+        console.log('db: query result is returned.');
         return res[0];
       }
     } catch (err) {

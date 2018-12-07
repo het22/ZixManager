@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// Main Layout: DashBoard
 import DashBoard from '@/components/DashBoard.vue'
-import NotFound from '@/components/NotFound.vue'
+// Contents
 import Home from '@/components/Home.vue'
 import Customer from '@/components/Customer.vue'
+import CustomerDetail from '@/components/CustomerDetail.vue'
 import Cost from '@/components/Cost.vue'
 import Notification from '@/components/Notification.vue'
+// Not Found
+import NotFound from '@/components/NotFound.vue'
 
 Vue.use(Router)
 
@@ -24,12 +28,25 @@ export default new Router({
         {
           path: '/customer',
           name: 'Customer',
-          component: Customer
+          component: Customer,
+        },
+        {
+          path: '/customer/:customer_id',
+          name: 'CustomerDetail',
+          component: CustomerDetail,
+          props: true
         },
         {
           path: '/cost',
           name: 'Cost',
-          component: Cost
+          component: Cost,
+          // router guard
+          beforeEnter: (to, from, next) => {
+            // redirection
+            next({
+              name: 'Home'
+            });
+          }
         },
         {
           path: '/notification',
