@@ -33,7 +33,7 @@
               <i class="fas fa-user"></i>
             </span>
             <span class="name">
-              Customer
+              Member
             </span>
           </a>
         </router-link>
