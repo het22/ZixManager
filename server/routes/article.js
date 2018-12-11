@@ -7,14 +7,14 @@ const dbpool = require('../dbpool.js');
 router.get('/customer', async (ctx, next) => {
   const client = ctx.request.ip;
   console.log("server: client request.("+client+" /customer)");
-  ctx.body = await fetch('SELECT * FROM customer')
+  ctx.body = await fetch('SELECT * FROM zix.member')
 });
 
 router.get('/customer/:id', async (ctx, next) => {
   const id = ctx.params.id;
   const client = ctx.request.ip;
   console.log("server: client request.("+client+" /customer/"+id+")");
-  ctx.body = await fetch('SELECT * FROM customer WHERE id='+id+'')
+  ctx.body = await fetch('SELECT * FROM zix.member WHERE mem_id='+id+'')
 });
 
 async function fetch(query) {

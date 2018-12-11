@@ -87,9 +87,6 @@ export default {
     return {
       isActive: true
     }
-  },
-  created() {
-    console.log(this.$route.path);
   }
 }
 </script>

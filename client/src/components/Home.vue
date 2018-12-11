@@ -13,7 +13,7 @@ export default {
 
 <style lang="css">
 .home-wrapper {
-
+  text-align: center;
 }
 
 .title.is-fullheight {

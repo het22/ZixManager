@@ -25,18 +25,18 @@
         <th>Remark</th>
       </tr>
     </thead>
-    <tbody v-if="customers.length!=0">
-      <tr v-for="customer in customers" :key="customer.id" v-on:click="selectCell(customer.id)">
-        <th>{{customer.id}}</th>
-        <td>{{customer.name}}</td>
-        <td>{{customer.phone}}</td>
-        <td>{{customer.address_customer}}</td>
-        <td>{{customer.remark}}</td>
+    <tbody v-if="members.length!=0">
+      <tr v-for="member in members" :key="member.mem_id" v-on:click="selectCell(member.mem_id)">
+        <th>{{member.mem_id}}</th>
+        <td>{{member.mem_username}}</td>
+        <td>{{member.mem_phone}}</td>
+        <td>{{member.mem_address}}</td>
+        <td>{{member.mem_remarks}}</td>
       </tr>
     </tbody>
   </table>
   <!-- empty -->
-  <div class="empty" v-if="customers.length==0">
+  <div class="empty" v-if="members.length==0">
     <span class="icon">
       <i class="fas fa-table"></i>
     </span>
@@ -52,8 +52,7 @@ export default {
   data() {
     return {
       keyword: '',
-      customers: [],
-      _customers: []
+      members: []
     }
   },
   created() {
@@ -65,28 +64,28 @@ export default {
     },
     keywordChanged(e) {
       this.keyword = e.target.value;
-      if (this.keyword == '') {
-        this.customers = this._customers;
-      } else {
-        this.customers = this._customers.filter(customer => customer.name.toLowerCase().indexOf(this.keyword.toLowerCase()) !== -1);
-      }
     },
     fetchCustomerData() {
       console.log('customer infor requested');
       this.$http.get('/article/customer')
         .then((res) => {
           const data = res.data;
-          this._customers = data;
-          this.keywordChanged({
-            'target': {
-              'value': ''
-            }
-          });
-          console.log('customer infor loaded');
+          if (!data) {
+            console.log('customer infor load failed');
+            return
+          } else {
+            this.members = data;
+            console.log('customer infor loaded('+data.length+' rows)');
+          }
         })
     },
     selectCell(id) {
-      this.$router.push({name: 'CustomerDetail', params: {customer_id: id}});
+      this.$router.push({
+        name: 'CustomerDetail',
+        params: {
+          customer_id: id
+        }
+      });
     }
   }
 }
@@ -96,6 +95,7 @@ export default {
 .customer-wrapper {
   margin: 20px;
   margin-left: 10px;
+  text-align: center;
 }
 
 .customer-wrapper .control .input {
