@@ -74,9 +74,9 @@
 </template>
 
 <script>
-import inputForm from './forms/input-form.vue'
-import textForm from './forms/text-form.vue'
-import dateForm from './forms/date-form.vue'
+import inputForm from '../forms/input-form.vue'
+import textForm from '../forms/text-form.vue'
+import dateForm from '../forms/date-form.vue'
 
 export default {
   components: {
@@ -110,27 +110,19 @@ export default {
     },
     modifybuttonTapped() {
       const id = this.member_id;
-      const time = new Date().toLocaleTimeString(navigator.language, {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      this.flash(time + ' 수정 요청 전송', 'warning', {
+      this.flash('수정한 내용 전송 중...', 'warning', {
         timeout: 3000
       })
       this.$http.post('/article/member_receiver/' + id, this.detail)
         .then((res) => {
           const success = res.data;
-          const time = new Date().toLocaleTimeString(navigator.language, {
-            hour: '2-digit',
-            minute: '2-digit'
-          });
           setTimeout(() => {
             if (success) {
-              this.flash(time + ' 수정 완료', 'success', {
+              this.flash('수정 완료', 'success', {
                 timeout: 3000
               })
             } else {
-              this.flash(time + ' 수정 실패', 'error', {
+              this.flash('수정 실패', 'error', {
                 timeout: 3000
               })
             }

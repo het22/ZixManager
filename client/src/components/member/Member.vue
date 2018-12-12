@@ -1,6 +1,6 @@
 <template lang="html">
 <div class="member-wrapper">
-  <!-- search bar -->
+  <!-- nav bar -->
   <nav class="level">
     <div class="level-left">
       <p class="level-item">
@@ -21,7 +21,7 @@
     </div>
     <div class="level-right">
       <p class="level-item" style="font-weight: bold">
-        <a class="button is-primary">
+        <a class="button is-primary" v-on:click="newButtonTapped">
           <span class="icon">
             <i class="fas fa-user-plus"></i>
           </span>
@@ -34,17 +34,17 @@
   <table class="table is-hoverable is-striped">
     <thead>
       <tr>
-        <th width="8%">ID</th>
-        <th width="12%">이름</th>
+        <th width="8%">이름</th>
+        <th width="12%">아이디</th>
         <th width="18%">연락처</th>
         <th width="32%">주소</th>
-        <th>비용</th>
+        <th>비고</th>
       </tr>
     </thead>
     <tbody v-if="members.length > 0">
       <tr v-for="member in members" :key="member.mem_id" v-on:click="selectCell(member.mem_id)">
-        <th>{{member.mem_id}}</th>
         <td>{{member.mem_username}}</td>
+        <td>{{member.mem_userid}}</td>
         <td>{{member.mem_phone}}</td>
         <td>{{member.mem_address}}</td>
         <td>{{member.mem_remarks}}</td>
@@ -95,6 +95,10 @@ export default {
           }
         })
     },
+    newButtonTapped() {
+      console.log('newButtonTapped');
+      this.$router.push({name: 'MemberNew'})
+    },
     selectCell(id) {
       this.$router.push({
         name: 'MemberDetail',
@@ -123,8 +127,7 @@ export default {
 }
 
 .member-wrapper .control .button:hover {
-  border-color: #00D1B3;
-  color: lightgrey;
+  color: grey;
 }
 
 .member-wrapper .empty {

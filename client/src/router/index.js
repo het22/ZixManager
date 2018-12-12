@@ -4,8 +4,9 @@ import Router from 'vue-router'
 import DashBoard from '@/components/DashBoard.vue'
 // Contents
 import Home from '@/components/Home.vue'
-import Member from '@/components/Member.vue'
-import MemberDetail from '@/components/MemberDetail.vue'
+import Member from '@/components/member/Member.vue'
+import MemberDetail from '@/components/member/MemberDetail.vue'
+import MemberNew from '@/components/member/MemberNew.vue'
 import Order from '@/components/Order.vue'
 import Cost from '@/components/Cost.vue'
 import Notification from '@/components/Notification.vue'
@@ -32,7 +33,12 @@ export default new Router({
           component: Member,
         },
         {
-          path: '/member/:member_id',
+          path: '/member/new',
+          name: 'MemberNew',
+          component: MemberNew
+        },
+        {
+          path: '/member/detail/:member_id',
           name: 'MemberDetail',
           component: MemberDetail,
           props: true

@@ -28,7 +28,7 @@
           Menu
         </p>
         <router-link :to="{name: 'Member'}">
-          <a class="item" v-bind:class="{active: this.$route.name=='Member' || this.$route.name=='MemberDetail'}">
+          <a class="item" v-bind:class="{active: this.$route.name=='Member' || this.$route.name=='MemberDetail'|| this.$route.name=='MemberNew'}">
             <span class="icon">
               <i class="fas fa-user"></i>
             </span>
