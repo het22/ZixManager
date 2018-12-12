@@ -1,9 +1,10 @@
 <template lang="html">
 <div class="member-detail-wrapper">
+  <!-- 내부 네비게이션 바 -->
   <nav class="level">
     <div class="level-left">
       <p class="level-item">
-        <a class="button">
+        <a class="button" v-on:click="backButtonTapped">
           <span class="icon">
             <i class="fas fa-angle-left"></i>
           </span>
@@ -13,7 +14,7 @@
     </div>
     <div class="level-right" style="font-weight: bold;">
       <p class="level-item" style="margin-bottom: 0rem;">
-        <a class="button is-primary">
+        <a class="button is-primary" v-on:click="modifybuttonTapped">
           <span class="icon">
             <i class="fas fa-edit"></i>
           </span>
@@ -21,7 +22,7 @@
         </a>
       </p>
       <p class="level-item">
-        <a class="button is-danger">
+        <a class="button is-danger" v-on:click="deleteButtonTapped">
           <span class="icon">
             <i class="fas fa-trash"></i>
           </span>
@@ -31,6 +32,7 @@
     </div>
   </nav>
   <div class="columns">
+    <!-- 개인정보 컬럼 -->
     <div class="column is-6">
       <div class="box">
         <div class="title">
@@ -46,10 +48,24 @@
         <textForm title="비고" :value.sync="detail.mem_remarks"></textForm>
       </div>
     </div>
+    <!-- 시공 목록 컬럼 -->
     <div class="column">
       <div class="box">
         <div class="title">
           시공목록
+        </div>
+        <div v-if="orders.length>0">
+          <div v-for="order in orders">
+
+          </div>
+        </div>
+        <div v-else class="empty">
+          <span class="icon">
+            <i class="far fa-file-alt"></i>
+          </span>
+          <span class="content">
+            No Orders
+          </span>
         </div>
       </div>
     </div>
@@ -61,16 +77,18 @@
 import inputForm from './forms/input-form.vue'
 import textForm from './forms/text-form.vue'
 import dateForm from './forms/date-form.vue'
+
 export default {
   components: {
     inputForm,
     textForm,
     dateForm
   },
-  props: ['customer_id'],
+  props: ['member_id'],
   data() {
     return {
-      detail: []
+      detail: [],
+      orders: []
     }
   },
   created() {
@@ -79,8 +97,8 @@ export default {
   methods: {
     fetchMemberDetailData() {
       console.log('member detail infor requested');
-      const id = this.customer_id;
-      this.$http.get('/article/customer/' + id)
+      const id = this.member_id;
+      this.$http.get('/article/member/' + id)
         .then((res) => {
           const data = res.data;
           this.detail = data[0];
@@ -88,7 +106,39 @@ export default {
         })
     },
     backButtonTapped() {
-      console.log(this.detail);
+      this.$router.go(-1);
+    },
+    modifybuttonTapped() {
+      const id = this.member_id;
+      const time = new Date().toLocaleTimeString(navigator.language, {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      this.flash(time + ' 수정 요청 전송', 'warning', {
+        timeout: 3000
+      })
+      this.$http.post('/article/member_receiver/' + id, this.detail)
+        .then((res) => {
+          const success = res.data;
+          const time = new Date().toLocaleTimeString(navigator.language, {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          setTimeout(() => {
+            if (success) {
+              this.flash(time + ' 수정 완료', 'success', {
+                timeout: 3000
+              })
+            } else {
+              this.flash(time + ' 수정 실패', 'error', {
+                timeout: 3000
+              })
+            }
+          }, 1000);
+        })
+    },
+    deleteButtonTapped() {
+      console.log('deleteButtonTapped');
     }
   }
 }
@@ -100,12 +150,19 @@ export default {
   margin-left: 10px;
 }
 
-.single {
+.member-detail-wrapper .single {
   margin: 20px;
   margin-left: 10px;
 }
-.single .title{
+.member-detail-wrapper .single .title{
   font-size: 20px;
   font-weight: 500;
+}
+
+.member-detail-wrapper .empty {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: grey;
 }
 </style>

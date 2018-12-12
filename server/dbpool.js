@@ -3,7 +3,8 @@ var dbconfig = {
   host: 'localhost',
   user: 'root',
   password: '111111',
-  database: 'zix'
+  database: 'zix',
+  dateStrings: true
 };
 var dbpool = mysql.createPool(dbconfig);
 

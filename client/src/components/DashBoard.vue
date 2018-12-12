@@ -27,8 +27,8 @@
         <p class="menu-label">
           Menu
         </p>
-        <router-link :to="{name: 'Customer'}">
-          <a class="item" v-bind:class="{active: this.$route.name=='Customer' || this.$route.name=='CustomerDetail'}">
+        <router-link :to="{name: 'Member'}">
+          <a class="item" v-bind:class="{active: this.$route.name=='Member' || this.$route.name=='MemberDetail'}">
             <span class="icon">
               <i class="fas fa-user"></i>
             </span>
@@ -74,11 +74,13 @@
       <router-view/>
     </div>
   </section>
+  <flash-message transitionName="fade" class="flash-pool"></flash-message>
 </div>
 </template>
 
 <script>
 import Navbar from './Navbar.vue'
+require('vue-flash-message/dist/vue-flash-message.min.css');
 export default {
   components: {
     Navbar,
@@ -141,5 +143,25 @@ export default {
 
 .content {
   background-color: #FFFFFF;
+}
+
+.flash-pool {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 15rem;
+  margin: 1rem;
+  opacity: 0.8;
+}
+
+.fade-move {
+  transition: transform .5s;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: all .5s;
+}
+.fade-enter, .fade-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
 }
 </style>

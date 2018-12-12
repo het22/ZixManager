@@ -4,9 +4,11 @@ import Vue from 'vue'
 import axios from 'axios'
 import App from './App'
 import router from './router'
+import VueFlashMessage from 'vue-flash-message';
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
+Vue.use(VueFlashMessage);
 
 /* eslint-disable no-new */
 new Vue({
