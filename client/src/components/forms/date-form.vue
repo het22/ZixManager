@@ -7,42 +7,19 @@
       </div>
     </div>
     <div class="column">
-      <div class="columns is-variable is-1" v-on:change="dateChanged">
-        <!-- year -->
-        <div class="column is-4">
-          <div class="select is-fullwidth">
-            <select id="year" v-model="propValue.getFullYear()">
-              <option value="NaN">YYYY</option>
-              <option v-for="n in 70" :value="1951+n">{{1951+n}}</option>
-            </select>
-          </div>
-        </div>
-        <!-- month -->
-        <div class="column is-4">
-          <div class="select is-fullwidth">
-            <select id="month" v-model="propValue.getMonth()+1">
-              <option value="NaN">MM</option>
-              <option v-for="n in 12" :value="0+n">{{0+n}}</option>
-            </select>
-          </div>
-        </div>
-        <!-- date -->
-        <div class="column is-4">
-          <div class="select is-fullwidth">
-            <select id="date" v-model="propValue.getDate()">
-              <option value="NaN">DD</option>
-              <option v-for="n in 31" :value="0+n">{{0+n}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      <date-picker class="datepicker" v-model="propValue" lang="en"></date-picker>
+    </div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker'
 export default {
+  components: {
+    DatePicker
+  },
   props: [
     'title',
     'value'
@@ -50,26 +27,17 @@ export default {
   computed: {
     propValue: {
       get() {
-        return new Date(this.value)
+        return this.value;
       },
       set(val) {
-        this.$emit('update:value', val);
+        var newDate = null;
+        if (val!=null) {
+          newDate = val.getUTCFullYear() + '-' +
+          ('00' + (val.getUTCMonth() + 1)).slice(-2) + '-' +
+          ('00' + (val.getUTCDate() + 1)).slice(-2)
+        }
+        this.$emit('update:value', newDate);
       }
-    }
-  },
-  methods: {
-    dateChanged() {
-      var year = document.getElementById('year').value*1;
-      var month = document.getElementById('month').value*1;
-      var date = document.getElementById('date').value*1;
-      var newDate = new Date(year, month-1, date+1);
-      if (isNaN(newDate)) {
-        return
-      }
-      newDate = newDate.getUTCFullYear() + '-' +
-        ('00' + (newDate.getUTCMonth() + 1)).slice(-2) + '-' +
-        ('00' + newDate.getUTCDate()).slice(-2)
-      this.propValue = newDate;
     }
   }
 }
@@ -84,5 +52,8 @@ export default {
 .date-form .title {
   font-size: 15px;
   font-weight: 400;
+}
+.datepicker {
+  width: 100%;
 }
 </style>

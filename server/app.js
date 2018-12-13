@@ -1,21 +1,20 @@
 const Koa = require('koa');
-const historyApiFallback = require('koa2-connect-history-api-fallback');
-var bodyParser = require('koa-bodyparser');
 const app = new Koa();
-const serve = require('koa-static');
 
 // history mode
+const historyApiFallback = require('koa2-connect-history-api-fallback');
 app.use(historyApiFallback());
 
 // body parser for post body
+const bodyParser = require('koa-bodyparser');
 app.use(bodyParser());
 
 // index page
+const serve = require('koa-static');
 app.use(serve(__dirname + '/public'));
 
 // router
 const router = require('./routes');
-
 app.use(router.routes());
 app.use(router.allowedMethods());
 

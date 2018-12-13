@@ -87,7 +87,7 @@ export default {
   props: ['member_id'],
   data() {
     return {
-      detail: [],
+      detail: {},
       orders: []
     }
   },
@@ -113,7 +113,7 @@ export default {
         timeout: constants.flash_timeout
       })
       const id = this.member_id;
-      this.$http.post('/article/member_receiver/modify/' + id, this.detail)
+      this.$http.post('/article/member/modify/' + id, this.detail)
         .then((res) => {
           const success = res.data;
           setTimeout(() => {
@@ -134,7 +134,7 @@ export default {
         timeout: constants.flash_timeout
       })
       const id = this.member_id;
-      this.$http.post('/article/member_receiver/delete/' + id)
+      this.$http.post('/article/member/delete/' + id)
         .then((res) => {
           const success = res.data;
           setTimeout(() => {

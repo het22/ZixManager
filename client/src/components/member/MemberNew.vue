@@ -52,63 +52,36 @@ export default {
     textForm,
     dateForm
   },
-  props: ['member_id'],
   data() {
     return {
       detail: {}
     }
   },
-  created() {
-
-  },
   methods: {
-    fetchMemberDetailData() {
-      console.log('member detail infor requested');
-      const id = this.member_id;
-      this.$http.get('/article/member/' + id)
-        .then((res) => {
-          const data = res.data;
-          this.detail = data[0];
-          console.log('member detail infor loaded');
-        })
-    },
     backButtonTapped() {
       this.$router.go(-1);
     },
     registerbuttonTapped() {
-      // 아이디 중복검사
-      if (this.validateUserId('')) {
-        this.flash('등록하는 중...', 'warning', {
-          timeout: constants.flash_timeout
+      this.flash('등록하는 중...', 'warning', {
+        timeout: constants.flash_timeout
+      })
+      console.log('new memeber register requested');
+      this.$http.post('/article/member/register', this.detail)
+        .then((res) => {
+          const success = res.data;
+          setTimeout(() => {
+            if (success) {
+              this.flash('등록 완료', 'success', {
+                timeout: constants.flash_timeout
+              })
+              this.$router.go(-1);
+            } else {
+              this.flash('등록 실패', 'error', {
+                timeout: constants.flash_timeout
+              })
+            }
+          }, constants.flash_delay);
         })
-        console.log(this.detail);
-        this.$http.post('/article/member_receiver/new', this.detail)
-          .then((res) => {
-            const success = res.data;
-            setTimeout(() => {
-              if (success) {
-                this.flash('등록 완료', 'success', {
-                  timeout: constants.flash_timeout
-                })
-                this.$router.go(-1);
-              } else {
-                this.flash('등록 실패', 'error', {
-                  timeout: constants.flash_timeout
-                })
-              }
-            }, constants.flash_delay);
-          })
-      } else {
-        this.flash('아이디 중복으로 실패', 'error', {
-          timeout: constants.flash_timeout
-        })
-      }
-    },
-    validateUserId(userid) {
-      // this.flash('아이디 중복검사 중...', 'warning', {
-      //   timeout: constants.flash_timeout
-      // })
-      return true
     }
   }
 }

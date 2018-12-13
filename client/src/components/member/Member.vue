@@ -34,8 +34,8 @@
   <table class="table is-hoverable is-striped">
     <thead>
       <tr>
-        <th width="8%">이름</th>
-        <th width="12%">아이디</th>
+        <th width="10%">이름</th>
+        <th width="16%">아이디</th>
         <th width="18%">연락처</th>
         <th width="32%">주소</th>
         <th>비고</th>
