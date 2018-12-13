@@ -31,9 +31,7 @@
         <!-- 등록 버튼 -->
         <div class="box-footer">
           <a class="button is-primary" v-on:click="registerbuttonTapped">
-            <span class="icon">
-              <i class="fas fa-edit"></i>
-            </span>
+            <span class="icon"><i class="fas fa-edit"></i></span>
             <span>등록</span>
           </a>
         </div>
@@ -47,7 +45,7 @@
 import inputForm from '../forms/input-form.vue'
 import textForm from '../forms/text-form.vue'
 import dateForm from '../forms/date-form.vue'
-
+let constants = require('../constants.js')
 export default {
   components: {
     inputForm,
@@ -57,7 +55,7 @@ export default {
   props: ['member_id'],
   data() {
     return {
-      detail: []
+      detail: {}
     }
   },
   created() {
@@ -78,22 +76,38 @@ export default {
       this.$router.go(-1);
     },
     registerbuttonTapped() {
-      console.log('registerbuttonTapped');
       // 아이디 중복검사
       if (this.validateUserId('')) {
         this.flash('등록하는 중...', 'warning', {
-          timeout: 3000
+          timeout: constants.flash_timeout
         })
+        console.log(this.detail);
+        this.$http.post('/article/member_receiver/new', this.detail)
+          .then((res) => {
+            const success = res.data;
+            setTimeout(() => {
+              if (success) {
+                this.flash('등록 완료', 'success', {
+                  timeout: constants.flash_timeout
+                })
+                this.$router.go(-1);
+              } else {
+                this.flash('등록 실패', 'error', {
+                  timeout: constants.flash_timeout
+                })
+              }
+            }, constants.flash_delay);
+          })
       } else {
         this.flash('아이디 중복으로 실패', 'error', {
-          timeout: 3000
+          timeout: constants.flash_timeout
         })
       }
     },
     validateUserId(userid) {
-      this.flash('아이디 중복검사 중...', 'warning', {
-        timeout: 3000
-      })
+      // this.flash('아이디 중복검사 중...', 'warning', {
+      //   timeout: constants.flash_timeout
+      // })
       return true
     }
   }

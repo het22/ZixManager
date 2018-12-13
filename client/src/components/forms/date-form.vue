@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="column">
-      <div class="columns" v-on:change="dateChanged">
+      <div class="columns is-variable is-1" v-on:change="dateChanged">
         <!-- year -->
         <div class="column is-4">
           <div class="select is-fullwidth">

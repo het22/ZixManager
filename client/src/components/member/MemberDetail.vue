@@ -77,7 +77,7 @@
 import inputForm from '../forms/input-form.vue'
 import textForm from '../forms/text-form.vue'
 import dateForm from '../forms/date-form.vue'
-
+let constants = require('../constants.js')
 export default {
   components: {
     inputForm,
@@ -109,28 +109,47 @@ export default {
       this.$router.go(-1);
     },
     modifybuttonTapped() {
-      const id = this.member_id;
       this.flash('수정한 내용 전송 중...', 'warning', {
-        timeout: 3000
+        timeout: constants.flash_timeout
       })
-      this.$http.post('/article/member_receiver/' + id, this.detail)
+      const id = this.member_id;
+      this.$http.post('/article/member_receiver/modify/' + id, this.detail)
         .then((res) => {
           const success = res.data;
           setTimeout(() => {
             if (success) {
               this.flash('수정 완료', 'success', {
-                timeout: 3000
+                timeout: constants.flash_timeout
               })
             } else {
               this.flash('수정 실패', 'error', {
-                timeout: 3000
+                timeout: constants.flash_timeout
               })
             }
-          }, 1000);
+          }, constants.flash_delay);
         })
     },
     deleteButtonTapped() {
-      console.log('deleteButtonTapped');
+      this.flash('삭제 요청 중...', 'warning', {
+        timeout: constants.flash_timeout
+      })
+      const id = this.member_id;
+      this.$http.post('/article/member_receiver/delete/' + id)
+        .then((res) => {
+          const success = res.data;
+          setTimeout(() => {
+            if (success) {
+              this.flash('삭제 완료', 'success', {
+                timeout: constants.flash_timeout
+              })
+              this.$router.go(-1);
+            } else {
+              this.flash('삭제 실패', 'error', {
+                timeout: constants.flash_timeout
+              })
+            }
+          }, constants.flash_delay);
+        })
     }
   }
 }

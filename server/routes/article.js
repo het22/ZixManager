@@ -17,22 +17,43 @@ router.get('/member/:id', async (ctx, next) => {
   ctx.body = await fetch('SELECT * FROM zix.member WHERE mem_id=' + id + '');
 });
 
-router.post('/member_receiver/:id', async (ctx, next) => {
+router.post('/member_receiver/modify/:id', async (ctx, next) => {
   const id = ctx.params.id;
   const client = ctx.request.ip;
   const member = ctx.request.body;
-  console.log("server: client request.(" + client + " /member_receiver/" + id + ")");
+  console.log("server: client request.(" + client + " /member_receiver/modify" + id + ")");
   const query =
-    'UPDATE zix.member\
-    SET\
-    mem_email = "'+member.mem_email+'",\
-    mem_phone = "'+member.mem_phone+'",\
-    mem_address = "'+member.mem_address+'",\
-    mem_birthday = "'+member.mem_birthday+'",\
-    mem_remarks = "'+member.mem_remarks+'"\
-    WHERE mem_id = 1'
+    `UPDATE zix.member SET
+    mem_email = "${member.mem_email}",
+    mem_phone = "${member.mem_phone}",
+    mem_address = "${member.mem_address}",
+    mem_birthday = "${member.mem_birthday}",
+    mem_remarks = "${member.mem_remarks}"
+    WHERE mem_id = ${id}`
   const success = await fetch(query);
-  ctx.body = (success!=false) ? true : false;
+  ctx.body = (success != false) ? true : false;
+});
+
+router.post('/member_receiver/new', async (ctx, next) => {
+  const client = ctx.request.ip;
+  const member = ctx.request.body;
+  console.log("server: client request.(" + client + " /new_member_receiver/)");
+  const query =
+    'INSERT INTO zix.member\
+    (mem_userid, mem_username, mem_email, mem_phone, mem_address, mem_remarks)\
+    VALUES ("' + member.mem_userid + '", "' + member.mem_username + '", "' + member.mem_email + '", "' + member.mem_phone + '", "' + member.mem_address + '", "' + member.mem_remarks + '")\
+    '
+  const success = await fetch(query);
+  ctx.body = (success != false) ? true : false;
+});
+
+router.post('/member_receiver/delete/:id', async (ctx, next) => {
+  const id = ctx.params.id;
+  const client = ctx.request.ip;
+  console.log("server: client request.(" + client + " /member_receiver/delete/" + id + ")");
+  const query = 'DELETE FROM zix.member WHERE (mem_id = ' + id + ')';
+  const success = await fetch(query);
+  ctx.body = (success != false) ? true : false;
 });
 
 async function fetch(query) {

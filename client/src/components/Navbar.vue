@@ -4,15 +4,9 @@
     <!-- logo -->
     <router-link to="/">
       <a class="navbar-item">
-        <span class="icon">
-          <i class="far fa-snowflake fa-2x"></i>
-        </span>
-        <span class="title">
-          ZIX
-        </span>
-        <span class="subtitle">
-          manager
-        </span>
+        <span class="icon"><i class="far fa-snowflake fa-2x"></i></span>
+        <span class="title">ZIX</span>
+        <span class="subtitle">manager</span>
       </a>
     </router-link>
   </div>
