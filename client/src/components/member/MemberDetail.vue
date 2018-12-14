@@ -12,9 +12,9 @@
     </div>
     <div class="level-right" style="font-weight: bold;">
       <p class="level-item" style="margin-bottom: 0rem;">
-        <a class="button is-primary" v-on:click="modifybuttonTapped">
+        <a class="button is-primary" v-on:click="saveButtonTapped">
           <span class="icon"><i class="fas fa-edit"></i></span>
-          <span>수정</span>
+          <span>저장</span>
         </a>
       </p>
       <p class="level-item">
@@ -96,7 +96,7 @@ export default {
     backButtonTapped() {
       this.$router.go(-1);
     },
-    modifybuttonTapped() {
+    saveButtonTapped() {
       this.flash('수정한 내용 전송 중...', 'warning', {
         timeout: constants.flash_timeout
       })

@@ -11,4 +11,8 @@ const order = require('./order.js');
 router.use(order.routes());
 router.use(order.allowedMethods());
 
+const cost = require('./cost.js');
+router.use(cost.routes());
+router.use(cost.allowedMethods());
+
 module.exports = router;

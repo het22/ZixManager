@@ -5,13 +5,14 @@ import DashBoard from '@/components/DashBoard.vue'
 // Contents
 import Home from '@/components/Home.vue'
 import Order from '@/components/Order.vue'
-import Cost from '@/components/Cost.vue'
 import Notification from '@/components/Notification.vue'
 // Member Pages
 import Member from '@/components/member/Member.vue'
 import MemberTable from '@/components/member/MemberTable.vue'
 import MemberDetail from '@/components/member/MemberDetail.vue'
 import MemberNew from '@/components/member/MemberNew.vue'
+// Cost Pages
+import Cost from '@/components/cost/Cost.vue'
 // Not Found
 import NotFound from '@/components/NotFound.vue'
 

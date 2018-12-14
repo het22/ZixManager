@@ -99,7 +99,7 @@ require('vue-flash-message/dist/vue-flash-message.min.css');
   font-weight: 600;
   font-size: 17px;
   margin: 4px;
-  color: #afb8c3;
+  color: #bbbbbb;
 }
 
 .sidemenu .menus .item:hover {
