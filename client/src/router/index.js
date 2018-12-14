@@ -4,12 +4,14 @@ import Router from 'vue-router'
 import DashBoard from '@/components/DashBoard.vue'
 // Contents
 import Home from '@/components/Home.vue'
-import Member from '@/components/member/Member.vue'
-import MemberDetail from '@/components/member/MemberDetail.vue'
-import MemberNew from '@/components/member/MemberNew.vue'
 import Order from '@/components/Order.vue'
 import Cost from '@/components/Cost.vue'
 import Notification from '@/components/Notification.vue'
+// Member Pages
+import Member from '@/components/member/Member.vue'
+import MemberTable from '@/components/member/MemberTable.vue'
+import MemberDetail from '@/components/member/MemberDetail.vue'
+import MemberNew from '@/components/member/MemberNew.vue'
 // Not Found
 import NotFound from '@/components/NotFound.vue'
 
@@ -29,19 +31,25 @@ export default new Router({
         },
         {
           path: '/member',
-          name: 'Member',
           component: Member,
-        },
-        {
-          path: '/member/new',
-          name: 'MemberNew',
-          component: MemberNew
-        },
-        {
-          path: '/member/detail/:member_id',
-          name: 'MemberDetail',
-          component: MemberDetail,
-          props: true
+          children: [
+            {
+              path: '/',
+              name: 'MemberTable',
+              component: MemberTable
+            },
+            {
+              path: '/member/new',
+              name: 'MemberNew',
+              component: MemberNew
+            },
+            {
+              path: '/member/detail/:member_id',
+              name: 'MemberDetail',
+              component: MemberDetail,
+              props: true
+            }
+          ]
         },
         {
           path: '/order',
@@ -56,14 +64,14 @@ export default new Router({
         {
           path: '/notification',
           name: 'Notification',
-          component: Notification,
-          // router guard
-          beforeEnter: (to, from, next) => {
-            // redirection
-            next({
-              name: 'Home'
-            });
-          }
+          component: Notification
+          // // router guard 조건을 만족하지 않으면 리디렉션을 걸 수 있다.
+          // beforeEnter: (to, from, next) => {
+          //   // redirection
+          //   next({
+          //     name: 'Home'
+          //   });
+          // }
         },
       ]
     },

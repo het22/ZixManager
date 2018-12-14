@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const app = new Koa();
 
-// history mode
+// history mode available
 const historyApiFallback = require('koa2-connect-history-api-fallback');
 app.use(historyApiFallback());
 
@@ -9,7 +9,7 @@ app.use(historyApiFallback());
 const bodyParser = require('koa-bodyparser');
 app.use(bodyParser());
 
-// index page
+// provide static file(index page)
 const serve = require('koa-static');
 app.use(serve(__dirname + '/public'));
 
@@ -20,5 +20,5 @@ app.use(router.allowedMethods());
 
 // execute
 app.listen(3000, () => {
-  console.log('server: listening to port 3000!');
+  console.log('koa: listening to port 3000!');
 })

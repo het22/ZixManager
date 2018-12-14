@@ -5,9 +5,7 @@
     <div class="level-left">
       <p class="level-item">
         <a class="button" v-on:click="backButtonTapped">
-          <span class="icon">
-            <i class="fas fa-angle-left"></i>
-          </span>
+          <span class="icon"><i class="fas fa-angle-left"></i></span>
           <span>뒤로</span>
         </a>
       </p>
@@ -66,7 +64,7 @@ export default {
         timeout: constants.flash_timeout
       })
       console.log('new memeber register requested');
-      this.$http.post('/article/member/register', this.detail)
+      this.$http.post(`/article/member/register`, this.detail)
         .then((res) => {
           const success = res.data;
           setTimeout(() => {

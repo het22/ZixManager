@@ -29,12 +29,12 @@ export default {
       get() {
         return this.value;
       },
-      set(val) {
+      set(newVal) {
         var newDate = null;
-        if (val!=null) {
-          newDate = val.getUTCFullYear() + '-' +
-          ('00' + (val.getUTCMonth() + 1)).slice(-2) + '-' +
-          ('00' + (val.getUTCDate() + 1)).slice(-2)
+        if (newVal!=null) {
+          newDate = newVal.getUTCFullYear() + '-' +
+          ('00' + (newVal.getUTCMonth() + 1)).slice(-2) + '-' +
+          ('00' + (newVal.getUTCDate() + 1)).slice(-2)
         }
         this.$emit('update:value', newDate);
       }

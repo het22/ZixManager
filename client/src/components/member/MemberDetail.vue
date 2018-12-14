@@ -5,9 +5,7 @@
     <div class="level-left">
       <p class="level-item">
         <a class="button" v-on:click="backButtonTapped">
-          <span class="icon">
-            <i class="fas fa-angle-left"></i>
-          </span>
+          <span class="icon"><i class="fas fa-angle-left"></i></span>
           <span>뒤로</span>
         </a>
       </p>
@@ -15,29 +13,24 @@
     <div class="level-right" style="font-weight: bold;">
       <p class="level-item" style="margin-bottom: 0rem;">
         <a class="button is-primary" v-on:click="modifybuttonTapped">
-          <span class="icon">
-            <i class="fas fa-edit"></i>
-          </span>
+          <span class="icon"><i class="fas fa-edit"></i></span>
           <span>수정</span>
         </a>
       </p>
       <p class="level-item">
         <a class="button is-danger" v-on:click="deleteButtonTapped">
-          <span class="icon">
-            <i class="fas fa-trash"></i>
-          </span>
+          <span class="icon"><i class="fas fa-trash"></i></span>
           <span>삭제</span>
         </a>
       </p>
     </div>
   </nav>
+
   <div class="columns">
     <!-- 개인정보 컬럼 -->
     <div class="column is-6">
       <div class="box">
-        <div class="title">
-          개인정보
-        </div>
+        <div class="title">개인정보</div>
         <inputForm title="회원번호" :value.sync="detail.mem_id" disabled="true"></inputForm>
         <inputForm title="이름" :value.sync="detail.mem_username" disabled="true"></inputForm>
         <inputForm title="아이디" :value.sync="detail.mem_userid" disabled="true"></inputForm>
@@ -51,21 +44,15 @@
     <!-- 시공 목록 컬럼 -->
     <div class="column">
       <div class="box">
-        <div class="title">
-          시공목록
-        </div>
+        <div class="title">시공목록</div>
         <div v-if="orders.length>0">
           <div v-for="order in orders">
 
           </div>
         </div>
         <div v-else class="empty">
-          <span class="icon">
-            <i class="far fa-file-alt"></i>
-          </span>
-          <span class="content">
-            No Orders
-          </span>
+          <span class="icon"><i class="far fa-file-alt"></i></span>
+          <span class="content">{{constants.EMPTY_ORDERTABLE_MESSAGE}}</span>
         </div>
       </div>
     </div>
@@ -88,7 +75,8 @@ export default {
   data() {
     return {
       detail: {},
-      orders: []
+      orders: [],
+      constants: require('../constants.js')
     }
   },
   created() {
@@ -98,7 +86,7 @@ export default {
     fetchMemberDetailData() {
       console.log('member detail infor requested');
       const id = this.member_id;
-      this.$http.get('/article/member/' + id)
+      this.$http.get(`/article/member/${id}`)
         .then((res) => {
           const data = res.data;
           this.detail = data[0];
@@ -113,7 +101,7 @@ export default {
         timeout: constants.flash_timeout
       })
       const id = this.member_id;
-      this.$http.post('/article/member/modify/' + id, this.detail)
+      this.$http.post(`/article/member/modify/${id}`, this.detail)
         .then((res) => {
           const success = res.data;
           setTimeout(() => {
@@ -134,7 +122,7 @@ export default {
         timeout: constants.flash_timeout
       })
       const id = this.member_id;
-      this.$http.post('/article/member/delete/' + id)
+      this.$http.post(`/article/member/delete/${id}`)
         .then((res) => {
           const success = res.data;
           setTimeout(() => {
@@ -172,8 +160,8 @@ export default {
 
 .member-detail-wrapper .empty {
   text-align: center;
-  font-weight: bold;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 15px;
   color: grey;
 }
 </style>

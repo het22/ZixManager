@@ -30,8 +30,8 @@ export default {
       get() {
         return this.value
       },
-      set(val) {
-        this.$emit('update:value', val);
+      set(newVal) {
+        this.$emit('update:value', newVal);
       }
     }
   }
