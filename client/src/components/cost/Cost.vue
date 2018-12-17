@@ -4,10 +4,10 @@
   <nav class="level">
     <div class="level-left">
       <p class="level-item">
-        <div style="color:#00D1B3; font-weight:bold">■ 소비자가</div>
+        <div style="color:#ff3860; font-weight:bold">■ 공급가</div>
       </p>
       <p class="level-item">
-        <div style="color:#ff3860; font-weight:bold">■ 공급가</div>
+        <div style="color:#00D1B3; font-weight:bold">■ 소비자가</div>
       </p>
     </div>
     <div class="level-right" style="font-weight: bold;">
@@ -43,9 +43,21 @@
         </div>
       </div>
     </div>
-    <div class="column is-4">
+    <div class="column">
       <div class="box">
         <div class="title">기타</div>
+        <div v-for="cost in labor_cost">
+          <costForm
+          :title="cost.lab_name"
+          :rtl_cost.sync="cost.lab_rtl_cost"
+          :spl_cost.sync="cost.lab_spl_cost"></costForm>
+        </div>
+        <div v-for="cost in subsidary_cost">
+          <costForm
+          :title="cost.sbd_name"
+          :rtl_cost.sync="cost.sbd_rtl_cost"
+          :spl_cost.sync="cost.sbd_spl_cost"></costForm>
+        </div>
       </div>
     </div>
   </div>
@@ -62,7 +74,9 @@ export default {
   data() {
     return {
       wallpaper_cost: [],
-      plate_cost: []
+      plate_cost: [],
+      labor_cost: [],
+      subsidary_cost: []
     }
   },
   created() {
@@ -83,6 +97,18 @@ export default {
           const data = res.data;
           this.plate_cost = data;
           console.log('plate_cost infor loaded');
+        })
+      this.$http.get(`/article/cost/labor_cost`)
+        .then((res) => {
+          const data = res.data;
+          this.labor_cost = data;
+          console.log('labor_cost infor loaded');
+        })
+      this.$http.get(`/article/cost/subsidary_cost`)
+        .then((res) => {
+          const data = res.data;
+          this.subsidary_cost = data;
+          console.log('subsidary_cost infor loaded');
         })
     },
     savebuttonTapped() {
@@ -114,6 +140,36 @@ export default {
               })
             } else {
               this.flash('장판 비용 수정 실패', 'error', {
+                timeout: constants.flash_timeout
+              })
+            }
+          }, constants.flash_delay);
+        })
+      this.$http.post(`/article/cost/labor_cost/save`, this.labor_cost)
+        .then((res) => {
+          const success = res.data;
+          setTimeout(() => {
+            if (success) {
+              this.flash('인건비 수정 완료', 'success', {
+                timeout: constants.flash_timeout
+              })
+            } else {
+              this.flash('인건비 수정 실패', 'error', {
+                timeout: constants.flash_timeout
+              })
+            }
+          }, constants.flash_delay);
+        })
+      this.$http.post(`/article/cost/subsidary_cost/save`, this.subsidary_cost)
+        .then((res) => {
+          const success = res.data;
+          setTimeout(() => {
+            if (success) {
+              this.flash('부자재비 수정 완료', 'success', {
+                timeout: constants.flash_timeout
+              })
+            } else {
+              this.flash('부자재비 수정 실패', 'error', {
                 timeout: constants.flash_timeout
               })
             }

@@ -35,7 +35,7 @@
         <th>비고</th>
       </tr>
     </thead>
-    <tbody v-if="members.length > 0">
+    <tbody>
       <tr v-for="member in members" :key="member.mem_id" v-on:click="selectCell(member.mem_id)">
         <td>{{member.mem_username}}</td>
         <td>{{member.mem_userid}}</td>

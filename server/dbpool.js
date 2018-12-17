@@ -8,7 +8,7 @@ var dbconfig = {
 };
 var dbpool = mysql.createPool(dbconfig);
 
-exports.fetch = async (query) => {
+exports.fetch = async (query, elements) => {
   // try database connection
   try {
     console.log('mysql: try get connection from pool...');
@@ -17,7 +17,7 @@ exports.fetch = async (query) => {
     try {
       console.log('mysql: success getting connection from pool!');
       console.log('mysql: try query...');
-      const res = await connection.query(query);
+      const res = await connection.query(query, elements);
       connection.release();
       console.log('mysql: connection released.');
       // check query result

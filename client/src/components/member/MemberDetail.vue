@@ -89,6 +89,9 @@ export default {
       this.$http.get(`/article/member/${id}`)
         .then((res) => {
           const data = res.data;
+          if (!data) {
+            this.$router.replace({name: 'NotFound'})
+          }
           this.detail = data[0];
           console.log('member detail infor loaded');
         })

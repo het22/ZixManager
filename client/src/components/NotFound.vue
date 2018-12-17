@@ -4,7 +4,7 @@
   <Navbar/>
   <div class="title is-fullheight">
     <i class="fas fa-exclamation-triangle"></i>
-    Page Not Found
+    발견되지 않은 페이지에요..
   </div>
 </div>
 </template>

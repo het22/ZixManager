@@ -8,14 +8,6 @@
     </div>
     <div class="column">
       <div class="field has-addons">
-        <div class="control of-retail">
-          <input
-          class="input"
-          :id="title"
-          placeholder="소비자가"
-          v-model="prop_rtl_cost"
-          style="color:#00D1B3"></input>
-        </div>
         <div class="control of-supply">
           <input
           class="input"
@@ -23,6 +15,14 @@
           placeholder="공급가"
           v-model="prop_spl_cost"
           style="color:#ff3860"></input>
+        </div>
+        <div class="control of-retail">
+          <input
+          class="input"
+          :id="title"
+          placeholder="소비자가"
+          v-model="prop_rtl_cost"
+          style="color:#00D1B3"></input>
         </div>
       </div>
     </div>

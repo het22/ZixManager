@@ -2,8 +2,6 @@
 <div>
   <!-- Navigation bar -->
   <navbar/>
-  <!-- Flash_message -->
-  <flash-message transitionName="fade" class="flash-pool"/>
   <!-- Main container -->
   <section class="columns">
     <!-- Sidemenu -->
@@ -52,6 +50,8 @@
       <router-view/>
     </div>
   </section>
+  <!-- Flash_message -->
+  <flash-message transitionName="fade" class="flash-pool"/>
 </div>
 </template>
 
