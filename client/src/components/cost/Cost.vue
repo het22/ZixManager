@@ -2,12 +2,12 @@
 <div class="cost-wrapper">
   <!-- 내부 네비게이션 바 -->
   <nav class="level">
-    <div class="level-left">
+    <div class="level-left" style="font-size: 15px;">
       <p class="level-item">
-        <div style="color:#ff3860; font-weight:bold">■ 공급가</div>
+        <div style="color:#ff3860; font-weight:bold; width: 100px">■ 공급가</div>
       </p>
       <p class="level-item">
-        <div style="color:#00D1B3; font-weight:bold">■ 소비자가</div>
+        <div style="color:#00D1B3; font-weight:bold; width: 100px">■ 소비자가</div>
       </p>
     </div>
     <div class="level-right" style="font-weight: bold;">
@@ -27,8 +27,8 @@
         <div v-for="cost in wallpaper_cost">
           <costForm
           :title="cost.wlp_name"
-          :rtl_cost.sync="cost.wlp_rtl_cost"
-          :spl_cost.sync="cost.wlp_spl_cost"></costForm>
+          :retail_cost.sync="cost.retail_cost"
+          :supply_cost.sync="cost.supply_cost"></costForm>
         </div>
       </div>
     </div>
@@ -38,8 +38,8 @@
         <div v-for="cost in plate_cost">
           <costForm
           :title="cost.plt_name"
-          :rtl_cost.sync="cost.plt_rtl_cost"
-          :spl_cost.sync="cost.plt_spl_cost"></costForm>
+          :retail_cost.sync="cost.retail_cost"
+          :supply_cost.sync="cost.supply_cost"></costForm>
         </div>
       </div>
     </div>
@@ -49,14 +49,14 @@
         <div v-for="cost in labor_cost">
           <costForm
           :title="cost.lab_name"
-          :rtl_cost.sync="cost.lab_rtl_cost"
-          :spl_cost.sync="cost.lab_spl_cost"></costForm>
+          :retail_cost.sync="cost.retail_cost"
+          :supply_cost.sync="cost.supply_cost"></costForm>
         </div>
         <div v-for="cost in subsidary_cost">
           <costForm
           :title="cost.sbd_name"
-          :rtl_cost.sync="cost.sbd_rtl_cost"
-          :spl_cost.sync="cost.sbd_spl_cost"></costForm>
+          :retail_cost.sync="cost.retail_cost"
+          :supply_cost.sync="cost.supply_cost"></costForm>
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@
 
 <script>
 import costForm from '../forms/cost-form.vue'
-let constants = require('../constants.js')
+let constants = require('../../constants.js')
 export default {
   components: {
     costForm
@@ -86,95 +86,38 @@ export default {
     fetchMemberDetailData() {
       console.log('cost infor requested');
       const id = this.member_id;
-      this.$http.get(`/article/cost/wallpaper_cost`)
-        .then((res) => {
-          const data = res.data;
-          this.wallpaper_cost = data;
-          console.log('wallpaper_cost infor loaded');
-        })
-      this.$http.get(`/article/cost/plate_cost`)
-        .then((res) => {
-          const data = res.data;
-          this.plate_cost = data;
-          console.log('plate_cost infor loaded');
-        })
-      this.$http.get(`/article/cost/labor_cost`)
-        .then((res) => {
-          const data = res.data;
-          this.labor_cost = data;
-          console.log('labor_cost infor loaded');
-        })
-      this.$http.get(`/article/cost/subsidary_cost`)
-        .then((res) => {
-          const data = res.data;
-          this.subsidary_cost = data;
-          console.log('subsidary_cost infor loaded');
-        })
+      const costs = ['wallpaper_cost', 'plate_cost', 'labor_cost', 'subsidary_cost'];
+      costs.forEach((cost) => {
+        this.$http.get(`/article/cost/${cost}`)
+          .then((res) => {
+            const data = res.data;
+            this[cost] = data;
+            console.log(`${cost} infor loaded`);
+          })
+      });
     },
     savebuttonTapped() {
       this.flash('수정한 내용 전송 중...', 'warning', {
-        timeout: constants.flash_timeout
+        timeout: constants.FLASH_TIMEOUT
       })
-      this.$http.post(`/article/cost/wallpaper_cost/save`, this.wallpaper_cost)
-        .then((res) => {
-          const success = res.data;
-          setTimeout(() => {
-            if (success) {
-              this.flash('벽지 비용 수정 완료', 'success', {
-                timeout: constants.flash_timeout
-              })
-            } else {
-              this.flash('벽지 비용 수정 실패', 'error', {
-                timeout: constants.flash_timeout
-              })
-            }
-          }, constants.flash_delay);
-        })
-      this.$http.post(`/article/cost/plate_cost/save`, this.plate_cost)
-        .then((res) => {
-          const success = res.data;
-          setTimeout(() => {
-            if (success) {
-              this.flash('장판 비용 수정 완료', 'success', {
-                timeout: constants.flash_timeout
-              })
-            } else {
-              this.flash('장판 비용 수정 실패', 'error', {
-                timeout: constants.flash_timeout
-              })
-            }
-          }, constants.flash_delay);
-        })
-      this.$http.post(`/article/cost/labor_cost/save`, this.labor_cost)
-        .then((res) => {
-          const success = res.data;
-          setTimeout(() => {
-            if (success) {
-              this.flash('인건비 수정 완료', 'success', {
-                timeout: constants.flash_timeout
-              })
-            } else {
-              this.flash('인건비 수정 실패', 'error', {
-                timeout: constants.flash_timeout
-              })
-            }
-          }, constants.flash_delay);
-        })
-      this.$http.post(`/article/cost/subsidary_cost/save`, this.subsidary_cost)
-        .then((res) => {
-          const success = res.data;
-          setTimeout(() => {
-            if (success) {
-              this.flash('부자재비 수정 완료', 'success', {
-                timeout: constants.flash_timeout
-              })
-            } else {
-              this.flash('부자재비 수정 실패', 'error', {
-                timeout: constants.flash_timeout
-              })
-            }
-          }, constants.flash_delay);
-        })
+      const costs = ['wallpaper_cost', 'plate_cost', 'labor_cost', 'subsidary_cost'];
+      costs.forEach((cost) => {
+        this.$http.post(`/article/cost/${cost}/save`, this[cost])
+          .then((res) => {
+            const success = res.data;
+            setTimeout(() => {
+              if (success) {
+                this.flash(constants.MESSAGE_SUCCESS.MODIFY[cost], 'success', {
+                  timeout: constants.FLASH_TIMEOUT
+                })
+              } else {
+                this.flash(constants.MESSAGE_FAIL.MODIFY[cost], 'error', {
+                  timeout: constants.FLASH_TIMEOUT
+                })
+              }
+            }, constants.FLASH_DELAY);
+          })
+      });
     }
   }
 }

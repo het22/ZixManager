@@ -25,7 +25,7 @@
             <span class="name">Member</span>
           </a>
         </router-link>
-        <router-link :to="{name: 'Order'}">
+        <router-link :to="{name: 'OrderTable'}">
           <a class="item" v-bind:class="{active: this.$route.name.match('Order')}">
             <span class="icon"><i class="fas fa-file-alt"></i></span>
             <span class="name">Order</span>

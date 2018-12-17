@@ -64,7 +64,6 @@
 import inputForm from '../forms/input-form.vue'
 import textForm from '../forms/text-form.vue'
 import dateForm from '../forms/date-form.vue'
-let constants = require('../constants.js')
 export default {
   components: {
     inputForm,
@@ -76,7 +75,7 @@ export default {
     return {
       detail: {},
       orders: [],
-      constants: require('../constants.js')
+      constants: require('../../constants.js')
     }
   },
   created() {
@@ -101,7 +100,7 @@ export default {
     },
     saveButtonTapped() {
       this.flash('수정한 내용 전송 중...', 'warning', {
-        timeout: constants.flash_timeout
+        timeout: this.constants.FLASH_TIMEOUT
       })
       const id = this.member_id;
       this.$http.post(`/article/member/modify/${id}`, this.detail)
@@ -110,19 +109,19 @@ export default {
           setTimeout(() => {
             if (success) {
               this.flash('수정 완료', 'success', {
-                timeout: constants.flash_timeout
+                timeout: this.constants.FLASH_TIMEOUT
               })
             } else {
               this.flash('수정 실패', 'error', {
-                timeout: constants.flash_timeout
+                timeout: this.constants.FLASH_TIMEOUT
               })
             }
-          }, constants.flash_delay);
+          }, this.constants.FLASH_DELAY);
         })
     },
     deleteButtonTapped() {
       this.flash('삭제 요청 중...', 'warning', {
-        timeout: constants.flash_timeout
+        timeout: this.constants.FLASH_TIMEOUT
       })
       const id = this.member_id;
       this.$http.post(`/article/member/delete/${id}`)
@@ -131,15 +130,15 @@ export default {
           setTimeout(() => {
             if (success) {
               this.flash('삭제 완료', 'success', {
-                timeout: constants.flash_timeout
+                timeout: this.constants.FLASH_TIMEOUT
               })
               this.$router.go(-1);
             } else {
               this.flash('삭제 실패', 'error', {
-                timeout: constants.flash_timeout
+                timeout: this.constants.FLASH_TIMEOUT
               })
             }
-          }, constants.flash_delay);
+          }, this.constants.FLASH_DELAY);
         })
     }
   }

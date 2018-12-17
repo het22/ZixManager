@@ -4,13 +4,17 @@ import Router from 'vue-router'
 import DashBoard from '@/components/DashBoard.vue'
 // Contents
 import Home from '@/components/Home.vue'
-import Order from '@/components/Order.vue'
 import Notification from '@/components/Notification.vue'
 // Member Pages
 import Member from '@/components/member/Member.vue'
 import MemberTable from '@/components/member/MemberTable.vue'
 import MemberDetail from '@/components/member/MemberDetail.vue'
 import MemberNew from '@/components/member/MemberNew.vue'
+// Order Pages
+import Order from '@/components/order/Order.vue'
+import OrderTable from '@/components/order/OrderTable.vue'
+import OrderDetail from '@/components/order/OrderDetail.vue'
+import OrderNew from '@/components/order/OrderNew.vue'
 // Cost Pages
 import Cost from '@/components/cost/Cost.vue'
 // Not Found
@@ -54,8 +58,25 @@ export default new Router({
         },
         {
           path: '/order',
-          name: 'Order',
-          component: Order
+          component: Order,
+          children: [
+            {
+              path: '/',
+              name: 'OrderTable',
+              component: OrderTable
+            },
+            {
+              path: '/order/new',
+              name: 'OrderNew',
+              component: OrderNew
+            },
+            {
+              path: '/order/detail/:order_id',
+              name: 'OrderDetail',
+              component: OrderDetail,
+              props: true
+            }
+          ]
         },
         {
           path: '/cost',

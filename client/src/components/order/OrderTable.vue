@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="member-wrapper">
+<div class="order-wrapper">
   <!-- nav bar -->
   <nav class="level">
     <div class="level-left">
@@ -28,27 +28,27 @@
   <table class="table is-hoverable is-striped">
     <thead>
       <tr>
-        <th width="10%">이름</th>
-        <th width="16%">아이디</th>
-        <th width="18%">연락처</th>
-        <th width="32%">주소</th>
+        <th width="10%">주문회원</th>
+        <th width="16%">상담일</th>
+        <th width="16%">시공일</th>
+        <th width="32%">시공지주소</th>
         <th>비고</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="member in members" :key="member.mem_id" v-on:click="selectCell(member.mem_id)">
-        <td>{{member.mem_username}}</td>
-        <td>{{member.mem_userid}}</td>
-        <td>{{member.mem_phone}}</td>
-        <td>{{member.mem_address}}</td>
-        <td>{{member.mem_remarks}}</td>
+      <tr v-for="order in orders" :key="order.ord_id" v-on:click="selectCell(order.ord_id)">
+        <td>{{order.mem_username}}</td>
+        <td>{{order.ord_date_consult}}</td>
+        <td>{{order.ord_date_construct}}</td>
+        <td>{{order.ord_adr_construct}}</td>
+        <td>{{order.ord_remarks}}</td>
       </tr>
     </tbody>
   </table>
   <!-- empty -->
-  <div class="empty" v-if="members.length==0">
+  <div class="empty" v-if="orders.length==0">
     <span class="icon"><i class="fas fa-table"></i></span>
-    <span class="content">{{constants.EMPTY_MEMBERTABLE_MESSAGE}}</span>
+    <span class="content">{{constants.EMPTY_ORDERTABLE_MESSAGE}}</span>
   </div>
 </div>
 </template>
@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       keyword: '',
-      members: [],
+      orders: [],
       constants: require('../../constants.js')
     }
   },
@@ -67,16 +67,16 @@ export default {
   },
   methods: {
     fetchCustomerData() {
-      console.log('member infor requested');
-      this.$http.get('/article/member')
+      console.log('order infor requested');
+      this.$http.get('/article/order')
         .then((res) => {
           const data = res.data;
           if (!data) {
-            console.log('member infor load failed');
+            console.log('order infor load failed');
             return
           } else {
-            this.members = data;
-            console.log('member infor loaded('+data.length+' rows)');
+            this.orders = data;
+            console.log('order infor loaded('+data.length+' rows)');
           }
         })
     },
@@ -88,13 +88,13 @@ export default {
     },
     newButtonTapped() {
       console.log('newButtonTapped');
-      this.$router.push({name: 'MemberNew'})
+      this.$router.push({name: 'OrderNew'})
     },
     selectCell(id) {
       this.$router.push({
-        name: 'MemberDetail',
+        name: 'OrderDetail',
         params: {
-          member_id: id
+          order_id: id
         }
       });
     }
@@ -103,25 +103,25 @@ export default {
 </script>
 
 <style lang="css">
-.member-wrapper {
+.order-wrapper {
   margin: 20px;
   margin-left: 10px;
   text-align: center;
 }
 
-.member-wrapper .control .input {
+.order-wrapper .control .input {
   width: 300px;
 }
 
-.member-wrapper .control .button {
+.order-wrapper .control .button {
   font-weight: 600;
 }
 
-.member-wrapper .control .button:hover {
+.order-wrapper .control .button:hover {
   color: grey;
 }
 
-.member-wrapper .empty {
+.order-wrapper .empty {
   font-weight: bold;
   color: grey;
 }
