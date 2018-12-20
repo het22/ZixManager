@@ -5,10 +5,10 @@ const router = new Router({
 const dbpool = require('../dbpool.js');
 
 const costTableNames = [
-  'wallpaper_cost',
-  'plate_cost',
-  'labor_cost',
-  'subsidary_cost'
+  'wallpaper',
+  'plate',
+  'labor',
+  'subsidary'
 ];
 const costPrefix = [
   'wlp',
@@ -25,7 +25,7 @@ for (i in costTableNames) {
   router.get(`/${tableName}`, async (ctx, next) => {
     const client = ctx.request.ip;
     console.log(`koa-router: client(${client}) request.(/cost/${tableName})`);
-    const query = `SELECT * FROM zix.${tableName}`;
+    const query = `SELECT * FROM zix.${tableName}_cost`;
     ctx.body = await dbpool.fetch(query)
   });
 
@@ -37,7 +37,7 @@ for (i in costTableNames) {
     var success = true;
     costs.forEach(async (cost) => {
       var query =
-        `UPDATE zix.${tableName} SET
+        `UPDATE zix.${tableName}_cost SET
         retail_cost = ?,
         supply_cost = ?
         WHERE ${prefix}_id = ?;`;

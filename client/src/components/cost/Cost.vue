@@ -27,8 +27,8 @@
         <div v-for="cost in wallpaper_cost">
           <costForm
           :title="cost.wlp_name"
-          :retail_cost.sync="cost.retail_cost"
-          :supply_cost.sync="cost.supply_cost"></costForm>
+          :rtl_cost.sync="cost.rtl_cost"
+          :spl_cost.sync="cost.spl_cost"></costForm>
         </div>
       </div>
     </div>
@@ -38,8 +38,8 @@
         <div v-for="cost in plate_cost">
           <costForm
           :title="cost.plt_name"
-          :retail_cost.sync="cost.retail_cost"
-          :supply_cost.sync="cost.supply_cost"></costForm>
+          :rtl_cost.sync="cost.rtl_cost"
+          :spl_cost.sync="cost.spl_cost"></costForm>
         </div>
       </div>
     </div>
@@ -49,14 +49,14 @@
         <div v-for="cost in labor_cost">
           <costForm
           :title="cost.lab_name"
-          :retail_cost.sync="cost.retail_cost"
-          :supply_cost.sync="cost.supply_cost"></costForm>
+          :rtl_cost.sync="cost.rtl_cost"
+          :spl_cost.sync="cost.spl_cost"></costForm>
         </div>
         <div v-for="cost in subsidary_cost">
           <costForm
           :title="cost.sbd_name"
-          :retail_cost.sync="cost.retail_cost"
-          :supply_cost.sync="cost.supply_cost"></costForm>
+          :rtl_cost.sync="cost.rtl_cost"
+          :spl_cost.sync="cost.spl_cost"></costForm>
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@
 
 <script>
 import costForm from '../forms/cost-form.vue'
-let constants = require('../../constants.js')
+import constants from '../../constants.js'
 export default {
   components: {
     costForm
@@ -86,12 +86,12 @@ export default {
     fetchMemberDetailData() {
       console.log('cost infor requested');
       const id = this.member_id;
-      const costs = ['wallpaper_cost', 'plate_cost', 'labor_cost', 'subsidary_cost'];
+      const costs = ['wallpaper', 'plate', 'labor', 'subsidary'];
       costs.forEach((cost) => {
         this.$http.get(`/article/cost/${cost}`)
           .then((res) => {
             const data = res.data;
-            this[cost] = data;
+            this[cost+'_cost'] = data;
             console.log(`${cost} infor loaded`);
           })
       });
@@ -100,18 +100,18 @@ export default {
       this.flash('수정한 내용 전송 중...', 'warning', {
         timeout: constants.FLASH_TIMEOUT
       })
-      const costs = ['wallpaper_cost', 'plate_cost', 'labor_cost', 'subsidary_cost'];
+      const costs = ['wallpaper', 'plate', 'labor', 'subsidary'];
       costs.forEach((cost) => {
-        this.$http.post(`/article/cost/${cost}/save`, this[cost])
+        this.$http.post(`/article/cost/${cost}/save`, this[cost+'_cost'])
           .then((res) => {
             const success = res.data;
             setTimeout(() => {
               if (success) {
-                this.flash(constants.MESSAGE_SUCCESS.MODIFY[cost], 'success', {
+                this.flash(constants.MESSAGE_SUCCESS.MODIFY[cost+'_cost'], 'success', {
                   timeout: constants.FLASH_TIMEOUT
                 })
               } else {
-                this.flash(constants.MESSAGE_FAIL.MODIFY[cost], 'error', {
+                this.flash(constants.MESSAGE_FAIL.MODIFY[cost+'_cost'], 'error', {
                   timeout: constants.FLASH_TIMEOUT
                 })
               }

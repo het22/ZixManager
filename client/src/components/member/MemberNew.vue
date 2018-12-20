@@ -11,19 +11,19 @@
       </p>
     </div>
   </nav>
+  <!-- 메인 컨텐츠 -->
   <div class="columns">
-    <!-- 개인정보 컬럼 -->
+    <!-- 개인정보 입력 컬럼 -->
     <div class="column is-6">
       <div class="box">
-        <div class="title">
-          신규회원
-        </div>
+        <!-- 제목 -->
+        <div class="title">신규회원</div>
         <!-- 입력 폼 -->
         <inputForm title="이름" :value.sync="detail.mem_username"></inputForm>
         <inputForm title="아이디" :value.sync="detail.mem_userid"></inputForm>
         <inputForm title="이메일" :value.sync="detail.mem_email"></inputForm>
         <inputForm title="연락처" :value.sync="detail.mem_phone"></inputForm>
-        <inputForm title="주소" :value.sync="detail.mem_address"></inputForm>
+        <inputForm title="주소" :value.sync="detail.mem_address_home"></inputForm>
         <dateForm title="생년월일" :value.sync="detail.mem_birthday"></dateForm>
         <textForm title="비고" :value.sync="detail.mem_remarks"></textForm>
         <!-- 등록 버튼 -->
@@ -43,7 +43,8 @@
 import inputForm from '../forms/input-form.vue'
 import textForm from '../forms/text-form.vue'
 import dateForm from '../forms/date-form.vue'
-let constants = require('../../constants.js')
+import constants from '../../constants.js'
+
 export default {
   components: {
     inputForm,
@@ -63,7 +64,6 @@ export default {
       this.flash('등록하는 중...', 'warning', {
         timeout: constants.FLASH_TIMEOUT
       })
-      console.log('new memeber register requested');
       this.$http.post(`/article/member/register`, this.detail)
         .then((res) => {
           const success = res.data;

@@ -7,11 +7,13 @@
       </label>
     </div>
     <div class="column">
-      <div v-if="disabled">
-        <input class="input" :id="title" :placeholder="title" v-model="propValue" disabled></input>
+      <div class="control" style="margin-bottom: 5px">
+        <input type="radio" class="is-checkradio" :id="title" :name="title" :value="null" v-model="propValue">
+        <label :for="title" style="margin: 0px">선택안함</label>
       </div>
-      <div v-else>
-        <input class="input" :id="title" :placeholder="title" v-model="propValue"></input>
+      <div class="control" v-for="option in options" style="margin-bottom: 5px">
+        <input type="radio" class="is-checkradio" :id="title+option.name" :name="title" :value="option.value" v-model="propValue">
+        <label :for="title+option.name" style="margin: 0px">{{option.name}}</label>
       </div>
     </div>
   </div>
@@ -19,11 +21,12 @@
 </template>
 
 <script>
+import 'bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio.min.css';
 export default {
   props: [
-    'disabled',
     'title',
-    'value'
+    'value',
+    'options'
   ],
   computed: {
     propValue: {

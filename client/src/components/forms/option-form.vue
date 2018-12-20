@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="text-form">
+<div class="input-form">
   <div class="columns">
     <div class="column is-3">
       <label :for="title">
@@ -7,23 +7,20 @@
       </label>
     </div>
     <div class="column">
-      <div v-if="disabled">
-        <textarea class="textarea" :id="title" :placeholder="title" v-model="propValue" disabled></textarea>
-      </div>
-      <div v-else>
-        <textarea class="textarea" :id="title" :placeholder="title" v-model="propValue"></textarea>
-      </div>
+      <input class="switch" type="checkbox" :id="title" v-model="propValue">
+      <label :for="title"></label>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+import 'bulma-extensions/bulma-switch/dist/css/bulma-switch.min.css';
 export default {
   props: [
-    'disabled',
     'title',
-    'value'
+    'value',
+    'options'
   ],
   computed: {
     propValue: {
@@ -39,12 +36,12 @@ export default {
 </script>
 
 <style lang="css">
-.text-form {
+.input-form {
   margin-left: 10px;
   margin-bottom: 10px;
 }
 
-.text-form .title {
+.input-form .title {
   font-size: 15px;
   font-weight: 400;
 }

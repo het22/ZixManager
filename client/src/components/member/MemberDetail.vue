@@ -31,12 +31,12 @@
     <div class="column is-6">
       <div class="box">
         <div class="title">개인정보</div>
-        <inputForm title="회원번호" :value.sync="detail.mem_id" disabled="true"></inputForm>
-        <inputForm title="이름" :value.sync="detail.mem_username" disabled="true"></inputForm>
-        <inputForm title="아이디" :value.sync="detail.mem_userid" disabled="true"></inputForm>
+        <inputForm title="회원번호" :value="detail.mem_id" disabled="true"></inputForm>
+        <inputForm title="이름" :value.sync="detail.mem_username"></inputForm>
+        <inputForm title="아이디" :value.sync="detail.mem_userid"></inputForm>
         <inputForm title="이메일" :value.sync="detail.mem_email"></inputForm>
         <inputForm title="연락처" :value.sync="detail.mem_phone"></inputForm>
-        <inputForm title="주소" :value.sync="detail.mem_address"></inputForm>
+        <inputForm title="주소" :value.sync="detail.mem_adr_home"></inputForm>
         <dateForm title="생년월일" :value.sync="detail.mem_birthday"></dateForm>
         <textForm title="비고" :value.sync="detail.mem_remarks"></textForm>
       </div>
@@ -64,6 +64,8 @@
 import inputForm from '../forms/input-form.vue'
 import textForm from '../forms/text-form.vue'
 import dateForm from '../forms/date-form.vue'
+import constants from '../../constants.js'
+
 export default {
   components: {
     inputForm,
@@ -75,11 +77,12 @@ export default {
     return {
       detail: {},
       orders: [],
-      constants: require('../../constants.js')
+      constants: constants
     }
   },
   created() {
     this.fetchMemberDetailData();
+    this.fetchOrdersData();
   },
   methods: {
     fetchMemberDetailData() {
@@ -95,12 +98,15 @@ export default {
           console.log('member detail infor loaded');
         })
     },
+    fetchOrdersData() {
+      console.log('member orders infor requested');
+    },
     backButtonTapped() {
       this.$router.go(-1);
     },
     saveButtonTapped() {
       this.flash('수정한 내용 전송 중...', 'warning', {
-        timeout: this.constants.FLASH_TIMEOUT
+        timeout: constants.FLASH_TIMEOUT
       })
       const id = this.member_id;
       this.$http.post(`/article/member/modify/${id}`, this.detail)
@@ -109,19 +115,19 @@ export default {
           setTimeout(() => {
             if (success) {
               this.flash('수정 완료', 'success', {
-                timeout: this.constants.FLASH_TIMEOUT
+                timeout: constants.FLASH_TIMEOUT
               })
             } else {
               this.flash('수정 실패', 'error', {
-                timeout: this.constants.FLASH_TIMEOUT
+                timeout: constants.FLASH_TIMEOUT
               })
             }
-          }, this.constants.FLASH_DELAY);
+          }, constants.FLASH_DELAY);
         })
     },
     deleteButtonTapped() {
       this.flash('삭제 요청 중...', 'warning', {
-        timeout: this.constants.FLASH_TIMEOUT
+        timeout: constants.FLASH_TIMEOUT
       })
       const id = this.member_id;
       this.$http.post(`/article/member/delete/${id}`)
@@ -130,15 +136,15 @@ export default {
           setTimeout(() => {
             if (success) {
               this.flash('삭제 완료', 'success', {
-                timeout: this.constants.FLASH_TIMEOUT
+                timeout: constants.FLASH_TIMEOUT
               })
               this.$router.go(-1);
             } else {
               this.flash('삭제 실패', 'error', {
-                timeout: this.constants.FLASH_TIMEOUT
+                timeout: constants.FLASH_TIMEOUT
               })
             }
-          }, this.constants.FLASH_DELAY);
+          }, constants.FLASH_DELAY);
         })
     }
   }

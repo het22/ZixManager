@@ -4,63 +4,104 @@ const router = new Router({
 });
 const dbpool = require('../dbpool.js');
 
-// 전체 고객정보 요청
+// 전체고객정보 페이지 - 테이블에 보여줄 전체고객정보 쿼리
 router.get('/', async (ctx, next) => {
-  const client = ctx.request.ip;
+  let client = ctx.request.ip;
   console.log(`koa-router: client(${client}) request.(/member)`);
-  const query = `SELECT * FROM zix.member`;
+  let query =
+    `SELECT
+    mem_id, mem_username, mem_userid, mem_phone, mem_adr_home, mem_remarks
+    FROM
+    zix.member`;
   ctx.body = await dbpool.fetch(query)
 });
 
-// 고객아이디로 고객정보요청
+// 상세고객정보 페이지 - 회원의 모든 개인정보 쿼리
 router.get('/:id', async (ctx, next) => {
-  const client = ctx.request.ip;
-  const id = ctx.params.id;
+  let client = ctx.request.ip;
+  let id = ctx.params.id;
   console.log(`koa-router: client(${client}) request.(/member/${id})`);
-  const query = `SELECT * FROM zix.member WHERE mem_id=${id}`;
-  ctx.body = await dbpool.fetch(query);
+  let query =
+    `SELECT
+    *
+    FROM
+    zix.member
+    WHERE
+    mem_id=?`;
+  ctx.body = await dbpool.fetch(query, id);
 });
 
-// 신규 고객 등록 요청
+// 신규고객작성 페이지 - 신규회원 삽입 쿼리
 router.post('/register', async (ctx, next) => {
-  const client = ctx.request.ip;
+  let client = ctx.request.ip;
   console.log(`koa-router: client(${client}) request.(/member/register)`);
-  const member = ctx.request.body;
-  const query =
-    `INSERT INTO zix.member (mem_userid, mem_username, mem_email,
-    mem_phone, mem_birthday, mem_address, mem_remarks)
-    VALUES ("${member.mem_userid}", "${member.mem_username}", "${member.mem_email}",
-    "${member.mem_phone}", ${(member.mem_birthday==null)?'NULL':`"${member.mem_birthday}"`}, "${member.mem_address}", "${member.mem_remarks}")`
-  const success = await dbpool.fetch(query);
-  ctx.body = (success != false) ? true : false;
+  let member = ctx.request.body;
+
+  // keys: `key, key, ... , key`
+  // elements: [value, value, ... , value]
+  // values: `?, ?, ... , ?`
+  var keys = ``;
+  var values = ``;
+  var elements = [];
+  for (var key in member) {
+    keys += `${key},`;
+    values += `?,`;
+    elements.push(member[key]);
+  }
+  keys = keys.slice(0, -1);
+  values = values.slice(0, -1);
+
+  let query =
+    `INSERT INTO
+    zix.member
+    (${keys})
+    VALUES
+    (${values})`;
+  let success = await dbpool.fetch(query, elements);
+  ctx.body = !!success;
 });
 
 // 고객 삭제 요청
 router.post('/delete/:id', async (ctx, next) => {
-  const id = ctx.params.id;
-  const client = ctx.request.ip;
+  let id = ctx.params.id;
+  let client = ctx.request.ip;
   console.log(`koa-router: client(${client}) request.(/member/delete/${id})`);
-  const query = `DELETE FROM zix.member WHERE mem_id=${id}`;
-  const success = await dbpool.fetch(query);
-  ctx.body = (success != false) ? true : false;
+  let query =
+    `DELETE FROM
+     zix.member
+     WHERE
+     mem_id=?`;
+  let success = await dbpool.fetch(query, id);
+  ctx.body = !!success;
 });
 
 // 고객 정보 수정 요청
 router.post('/modify/:id', async (ctx, next) => {
-  const id = ctx.params.id;
-  const client = ctx.request.ip;
-  const member = ctx.request.body;
+  let id = ctx.params.id;
+  let client = ctx.request.ip;
+  let member = ctx.request.body;
   console.log(`koa-router: client(${client}) request.(/member/modify/${id})`);
-  const query =
-    `UPDATE zix.member SET
-    mem_email = "${member.mem_email}",
-    mem_phone = "${member.mem_phone}",
-    mem_address = "${member.mem_address}",
-    mem_birthday = "${member.mem_birthday}",
-    mem_remarks = "${member.mem_remarks}"
-    WHERE mem_id = ${id}`
-  const success = await dbpool.fetch(query);
-  ctx.body = (success != false) ? true : false;
+
+  // keyValues: `key=?, key=?, ... , key=?`
+  // elements: [value, value, ... , value]
+  var keyValues = ``;
+  var elements = [];
+  for (var key in member) {
+    if (key=='mem_id') continue;
+    keyValues += `${key} = ?,`;
+    elements.push(member[key]);
+  }
+  keyValues = keyValues.slice(0, -1);
+
+  let query =
+    `UPDATE
+    zix.member
+    SET
+    ${keyValues}
+    WHERE
+    mem_id = ${id}`
+  let success = await dbpool.fetch(query, elements);
+  ctx.body = !!success;
 });
 
 module.exports = router;

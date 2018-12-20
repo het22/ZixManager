@@ -12,17 +12,15 @@
           <input
           class="input"
           :id="title"
-          placeholder="공급가"
-          v-model="prop_spl_cost"
-          style="color:#ff3860"></input>
+          placeholder="공급평수"
+          v-model="fisrtValue"></input>
         </div>
         <div class="control of-retail">
           <input
           class="input"
           :id="title"
-          placeholder="소비자가"
-          v-model="prop_rtl_cost"
-          style="color:#00D1B3"></input>
+          placeholder="실제평수"
+          v-model="secondValue"></input>
         </div>
       </div>
     </div>
@@ -34,17 +32,24 @@
 export default {
   props: [
     'title',
-    'rtl_cost',
-    'spl_cost'
+    'value'
   ],
   computed: {
-    prop_rtl_cost: {
-      get() {return this.rtl_cost},
-      set(newVal) {this.$emit('update:rtl_cost', newVal)}
+    fisrtValue: {
+      get() {
+        return this.value
+      },
+      set(newVal) {
+        this.$emit('update:value', newVal)
+      }
     },
-    prop_spl_cost: {
-      get() {return this.spl_cost},
-      set(newVal) {this.$emit('update:spl_cost', newVal)}
+    secondValue: {
+      get() {
+        return this.value * 2.5
+      },
+      set(newVal) {
+        this.$emit('update:value', newVal/2.5)
+      }
     }
   }
 }

@@ -7,12 +7,9 @@
       </label>
     </div>
     <div class="column">
-      <div v-if="disabled">
-        <input class="input" :id="title" :placeholder="title" v-model="propValue" disabled></input>
-      </div>
-      <div v-else>
-        <input class="input" :id="title" :placeholder="title" v-model="propValue"></input>
-      </div>
+      <router-link :to="{ name: 'MemberDetail', params: {member_id: 1} }">
+        {{value}}
+      </router-link>
     </div>
   </div>
 </div>
@@ -21,20 +18,9 @@
 <script>
 export default {
   props: [
-    'disabled',
     'title',
     'value'
-  ],
-  computed: {
-    propValue: {
-      get() {
-        return this.value
-      },
-      set(newVal) {
-        this.$emit('update:value', newVal);
-      }
-    }
-  }
+  ]
 }
 </script>
 

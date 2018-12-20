@@ -2,9 +2,9 @@
 <div class="date-form">
   <div class="columns">
     <div class="column is-3">
-      <div class="title">
-        <label :for="title">{{title}}</label>
-      </div>
+      <label :for="title">
+        <div class="title">{{title}}</div>
+      </label>
     </div>
     <div class="column">
       <date-picker class="datepicker" v-model="propValue" lang="en"></date-picker>
