@@ -37,7 +37,7 @@ export default {
   computed: {
     fisrtValue: {
       get() {
-        return this.value
+        return this.value || ''
       },
       set(newVal) {
         this.$emit('update:value', newVal)
@@ -45,7 +45,7 @@ export default {
     },
     secondValue: {
       get() {
-        return this.value * 2.5
+        return this.value * 2.5 || ''
       },
       set(newVal) {
         this.$emit('update:value', newVal/2.5)

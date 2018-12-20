@@ -10,22 +10,53 @@
         </a>
       </p>
     </div>
+    <div class="level-right" style="font-weight: bold;">
+      <p class="level-item" style="margin-bottom: 0rem;">
+        <a class="button is-primary" v-on:click="registerbuttonTapped">
+          <span class="icon"><i class="fas fa-edit"></i></span>
+          <span>등록</span>
+        </a>
+      </p>
+    </div>
   </nav>
+
   <div class="columns">
-    <!-- 개인정보 컬럼 -->
-    <div class="column is-6">
+    <!-- 시공정보 컬럼 -->
+    <div class="column is-4">
       <div class="box">
-        <div class="title">
-          신규주문
-        </div>
-        <!-- 입력 폼 -->
-        <!-- 등록 버튼 -->
-        <div class="box-footer">
-          <a class="button is-primary" v-on:click="registerbuttonTapped">
-            <span class="icon"><i class="fas fa-edit"></i></span>
-            <span>등록</span>
-          </a>
-        </div>
+        <div class="title">시공정보</div>
+        <inputForm title="주문회원" :value.sync="detail.mem_id"></inputForm>
+        <dateForm title="상담일" :value.sync="detail.ord_date_consult"></dateForm>
+        <dateForm title="시공일" :value.sync="detail.ord_date_construct"></dateForm>
+        <inputForm title="샘플주소" :value.sync="detail.ord_adr_sample"></inputForm>
+        <inputForm title="시공주소" :value.sync="detail.ord_adr_construct"></inputForm>
+        <textForm title="비고" :value.sync="detail.ord_remarks"></textForm>
+      </div>
+    </div>
+    <!-- 시공내용 컬럼 -->
+    <div class="column is-4">
+      <div class="box">
+        <div class="title">시공내용</div>
+        <areaForm title="평형" :value.sync="detail.ord_spl_area"></areaForm>
+        <selectForm title="방개수" :value.sync="detail.ord_room_count" :options="room_count_options"></selectForm>
+        <selectForm title="벽지종류" :value.sync="detail.wlp_id" :options="wlp_options"></selectForm>
+        <radioForm title="벽지개수" :value.sync="detail.ord_wlp_count" :options="wlp_count_options"></radioForm>
+        <selectForm title="장판종류" :value.sync="detail.plt_id" :options="plt_options"></selectForm>
+        <radioForm title="걸레받이" :value.sync="detail.ord_baseboard" :options="baseboard_options"></radioForm>
+        <optionForm title="베란다확장" :value.sync="detail.ord_veranda"></optionForm>
+        <optionForm title="복층옵션" :value.sync="detail.ord_duplex"></optionForm>
+        <optionForm title="가구있음" :value.sync="detail.ord_occupied"></optionForm>
+      </div>
+    </div>
+    <!-- 예상가격 컬럼 -->
+    <div class="column">
+      <div class="box">
+        <div class="title">예상가격</div>
+        <inputForm title="입력가격" :value.sync="detail.ord_price"></inputForm>
+        <inputForm title="공급가격" :value="detail.ord_rtl_price" disabled="true"></inputForm>
+        <inputForm title="소비자가격" :value="detail.ord_spl_price" disabled="true"></inputForm>
+        <inputForm title="계약금" :value="detail.ord_down_price" disabled="true"></inputForm>
+        <optionForm title="결제여부" :value.sync="detail.ord_paid"></optionForm>
       </div>
     </div>
   </div>
@@ -36,19 +67,70 @@
 import inputForm from '../forms/input-form.vue'
 import textForm from '../forms/text-form.vue'
 import dateForm from '../forms/date-form.vue'
+import linkForm from '../forms/link-form.vue'
+import areaForm from '../forms/area-form.vue'
+import selectForm from '../forms/select-form.vue'
+import radioForm from '../forms/radio-form.vue'
+import optionForm from '../forms/option-form.vue'
 let constants = require('../../constants.js')
 export default {
   components: {
     inputForm,
     textForm,
-    dateForm
+    dateForm,
+    linkForm,
+    areaForm,
+    selectForm,
+    radioForm,
+    optionForm
   },
   data() {
     return {
-      detail: {}
+      constants: constants,
+      detail: {},
+      wlp_options: [],
+      plt_options: [],
+      room_count_options: [
+        {name: '1개', value: 1},
+        {name: '2개', value: 2},
+        {name: '3개', value: 3},
+        {name: '4개', value: 4},
+        {name: '5개', value: 5},
+      ],
+      wlp_count_options: [
+        {name: '1개', value: 1},
+        {name: '2개', value: 2},
+        {name: '3개', value: 3}
+      ],
+      baseboard_options: [
+        {name: '집전체', value: 1},
+        {name: '방만', value: 2}
+      ]
     }
   },
+  created() {
+    this.fetchWallpaperOptions();
+    this.fetchPlateOptions();
+  },
   methods: {
+    fetchWallpaperOptions() {
+      this.$http.get(`/article/cost/wallpaper`)
+        .then((res) => {
+          const data = res.data;
+          data.forEach((row) => {
+            this.wlp_options.push({name: row.wlp_name, value: row.wlp_id});
+          })
+        })
+    },
+    fetchPlateOptions() {
+      this.$http.get(`/article/cost/plate`)
+        .then((res) => {
+          const data = res.data;
+          data.forEach((row) => {
+            this.plt_options.push({name: row.plt_name, value: row.plt_id});
+          })
+        })
+    },
     backButtonTapped() {
       this.$router.go(-1);
     },
@@ -56,23 +138,22 @@ export default {
       this.flash('등록하는 중...', 'warning', {
         timeout: constants.FLASH_TIMEOUT
       })
-      console.log('new order register requested');
-      // this.$http.post(`/article/member/register`, this.detail)
-      //   .then((res) => {
-      //     const success = res.data;
-      //     setTimeout(() => {
-      //       if (success) {
-      //         this.flash('등록 완료', 'success', {
-      //           timeout: constants.FLASH_TIMEOUT
-      //         })
-      //         this.$router.go(-1);
-      //       } else {
-      //         this.flash('등록 실패', 'error', {
-      //           timeout: constants.FLASH_TIMEOUT
-      //         })
-      //       }
-      //     }, constants.FLASH_DELAY);
-      //   })
+      this.$http.post(`/article/order/register`, this.detail)
+        .then((res) => {
+          const success = res.data;
+          setTimeout(() => {
+            if (success) {
+              this.flash('등록 완료', 'success', {
+                timeout: constants.FLASH_TIMEOUT
+              })
+              this.$router.go(-1);
+            } else {
+              this.flash('등록 실패', 'error', {
+                timeout: constants.FLASH_TIMEOUT
+              })
+            }
+          }, constants.FLASH_DELAY);
+        })
     }
   }
 }

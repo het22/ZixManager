@@ -30,7 +30,7 @@ export default new Router({
       component: DashBoard,
       children: [
         {
-          path: '/',
+          path: '',
           name: 'Home',
           component: Home
         },
@@ -39,7 +39,7 @@ export default new Router({
           component: Member,
           children: [
             {
-              path: '/',
+              path: '',
               name: 'MemberTable',
               component: MemberTable
             },
@@ -61,7 +61,7 @@ export default new Router({
           component: Order,
           children: [
             {
-              path: '/',
+              path: '',
               name: 'OrderTable',
               component: OrderTable
             },

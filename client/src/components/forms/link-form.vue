@@ -7,7 +7,7 @@
       </label>
     </div>
     <div class="column">
-      <router-link :to="{ name: 'MemberDetail', params: {member_id: 1} }">
+      <router-link :to="{name: 'MemberDetail', params: {member_id: mem_id || 0}}">
         {{value}}
       </router-link>
     </div>
@@ -19,7 +19,8 @@
 export default {
   props: [
     'title',
-    'value'
+    'value',
+    'mem_id'
   ]
 }
 </script>
