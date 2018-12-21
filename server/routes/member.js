@@ -2,7 +2,8 @@ const Router = require('koa-router');
 const router = new Router({
   prefix: '/member'
 });
-const dbpool = require('../dbpool.js');
+const dbpool = require('../db/dbpool.js');
+
 
 // 전체고객정보 페이지 - 테이블에 보여줄 전체고객정보 쿼리
 router.get('/', async (ctx, next) => {

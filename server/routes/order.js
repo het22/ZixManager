@@ -2,7 +2,8 @@ const Router = require('koa-router');
 const router = new Router({
   prefix: '/order'
 });
-const dbpool = require('../dbpool.js');
+const dbpool = require('../db/dbpool.js');
+
 
 // 전체주문정보 페이지 - 테이블에 보여줄 주문 정보들
 router.get('/', async (ctx, next) => {

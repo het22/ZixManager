@@ -2,7 +2,7 @@ const Router = require('koa-router');
 const router = new Router({
   prefix: '/cost'
 });
-const dbpool = require('../dbpool.js');
+const dbpool = require('../db/dbpool.js');
 
 const costTableNames = [
   'wallpaper',
