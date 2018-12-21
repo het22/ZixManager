@@ -34,10 +34,10 @@
             <span class="name">Cost</span>
           </a>
         </router-link>
-        <router-link :to="{name: 'Notification'}">
-          <a class="item" v-bind:class="{active: this.$route.name.match('Notification')}">
-            <span class="icon"><i class="fas fa-bell"></i></span>
-            <span class="name">Notification</span>
+        <router-link :to="{name: 'Schedule'}">
+          <a class="item" v-bind:class="{active: this.$route.name.match('Schedule')}">
+            <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+            <span class="name">Schedule</span>
           </a>
         </router-link>
       </div>

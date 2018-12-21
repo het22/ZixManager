@@ -6,7 +6,6 @@ import DashBoard from '@/components/DashBoard.vue'
 
 // Contents
 import Home from '@/components/Home.vue'
-import Notification from '@/components/Notification.vue'
 
 // Member Pages
 import Member from '@/components/member/Member.vue'
@@ -22,6 +21,9 @@ import OrderNew from '@/components/order/OrderNew.vue'
 
 // Cost Pages
 import Cost from '@/components/cost/Cost.vue'
+
+// Schedule Pages
+import Schedule from '@/components/schedule/Schedule.vue'
 
 // Not Found
 import NotFound from '@/components/NotFound.vue'
@@ -90,9 +92,9 @@ export default new Router({
           component: Cost
         },
         {
-          path: '/notification',
-          name: 'Notification',
-          component: Notification
+          path: '/schedule',
+          name: 'Schedule',
+          component: Schedule
           // // router guard 조건을 만족하지 않으면 리디렉션을 걸 수 있다.
           // beforeEnter: (to, from, next) => {
           //   // redirection

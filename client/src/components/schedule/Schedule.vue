@@ -1,7 +1,7 @@
 <template lang="html">
-<div class="notification-wrapper">
+<div class="schedule-wrapper">
   <div class="title is-fullheight">
-    <i class="fas fa-bell"></i>
+    <i class="fas fa-calendar-alt"></i>
   </div>
 </div>
 </template>
@@ -12,7 +12,7 @@ export default {
 </script>
 
 <style lang="css">
-.notification-wrapper {
+.schedule-wrapper {
   text-align: center;
 }
 
