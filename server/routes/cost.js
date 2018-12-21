@@ -23,17 +23,15 @@ for (i in costTableNames) {
 
   // 가격정보 요청 처리
   router.get(`/${tableName}`, async (ctx, next) => {
-    const client = ctx.request.ip;
-    console.log(`koa-router: client(${client}) request.(/cost/${tableName})`);
-    const query = `SELECT * FROM zix.${tableName}_cost`;
+    console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
+    let query = `SELECT * FROM zix.${tableName}_cost`;
     ctx.body = await dbpool.fetch(query)
   });
 
   // 가격정보 수정요청 처리
   router.post(`/${tableName}/save`, async (ctx, next) => {
-    const client = ctx.request.ip;
-    const costs = ctx.request.body;
-    console.log(`koa-router: client(${client}) request.(/cost/${tableName}/save)`);
+    console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
+    let costs = ctx.request.body;
     var success = true;
     costs.forEach(async (cost) => {
       var query =

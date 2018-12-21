@@ -6,8 +6,7 @@ const dbpool = require('../dbpool.js');
 
 // 전체고객정보 페이지 - 테이블에 보여줄 전체고객정보 쿼리
 router.get('/', async (ctx, next) => {
-  let client = ctx.request.ip;
-  console.log(`koa-router: client(${client}) request.(/member)`);
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let query =
     `SELECT
     mem_id, mem_username, mem_userid, mem_phone, mem_adr_home, mem_remarks
@@ -18,9 +17,8 @@ router.get('/', async (ctx, next) => {
 
 // 상세고객정보 페이지 - 회원의 모든 개인정보 쿼리
 router.get('/:id', async (ctx, next) => {
-  let client = ctx.request.ip;
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let id = ctx.params.id;
-  console.log(`koa-router: client(${client}) request.(/member/${id})`);
   let query =
     `SELECT
     *
@@ -33,8 +31,7 @@ router.get('/:id', async (ctx, next) => {
 
 // 신규고객작성 페이지 - 신규회원 삽입 쿼리
 router.post('/register', async (ctx, next) => {
-  let client = ctx.request.ip;
-  console.log(`koa-router: client(${client}) request.(/member/register)`);
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let member = ctx.request.body;
 
   // keys: `key, key, ... , key`
@@ -63,9 +60,8 @@ router.post('/register', async (ctx, next) => {
 
 // 고객 삭제 요청
 router.post('/delete/:id', async (ctx, next) => {
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let id = ctx.params.id;
-  let client = ctx.request.ip;
-  console.log(`koa-router: client(${client}) request.(/member/delete/${id})`);
   let query =
     `DELETE FROM
      zix.member
@@ -77,10 +73,9 @@ router.post('/delete/:id', async (ctx, next) => {
 
 // 고객 정보 수정 요청
 router.post('/modify/:id', async (ctx, next) => {
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let id = ctx.params.id;
-  let client = ctx.request.ip;
   let member = ctx.request.body;
-  console.log(`koa-router: client(${client}) request.(/member/modify/${id})`);
 
   // keyValues: `key=?, key=?, ... , key=?`
   // elements: [value, value, ... , value]

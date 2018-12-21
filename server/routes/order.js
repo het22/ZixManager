@@ -6,9 +6,8 @@ const dbpool = require('../dbpool.js');
 
 // 전체주문정보 페이지 - 테이블에 보여줄 주문 정보들
 router.get('/', async (ctx, next) => {
-  const client = ctx.request.ip;
-  console.log(`koa-router: client(${client}) request.(/order)`);
-  const query =
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
+  let query =
   `SELECT *
   FROM zix.order AS o
   JOIN (SELECT mem_id, mem_username FROM zix.member) AS m
@@ -18,9 +17,8 @@ router.get('/', async (ctx, next) => {
 
 // 상세주문정보 페이지 - 주문의 모든 정보 쿼리
 router.get('/:id', async (ctx, next) => {
-  let client = ctx.request.ip;
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let id = ctx.params.id;
-  console.log(`koa-router: client(${client}) request.(/order/${id})`);
   let query =
     `SELECT *
     FROM zix.order AS o
@@ -31,8 +29,7 @@ router.get('/:id', async (ctx, next) => {
 
 // 주문고객작성 페이지 - 신규주문 삽입 쿼리
 router.post('/register', async (ctx, next) => {
-  let client = ctx.request.ip;
-  console.log(`koa-router: client(${client}) request.(/order/register)`);
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let order = ctx.request.body;
 
   // keys: `key, key, ... , key`
@@ -61,10 +58,9 @@ router.post('/register', async (ctx, next) => {
 
 // 주문 정보 수정 요청
 router.post('/modify/:id', async (ctx, next) => {
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let id = ctx.params.id;
-  let client = ctx.request.ip;
   let order = ctx.request.body;
-  console.log(`koa-router: client(${client}) request.(/order/modify/${id})`);
 
   // keyValues: `key=?, key=?, ... , key=?`
   // elements: [value, value, ... , value]
@@ -90,9 +86,8 @@ router.post('/modify/:id', async (ctx, next) => {
 
 // 주문 삭제 요청
 router.post('/delete/:id', async (ctx, next) => {
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let id = ctx.params.id;
-  let client = ctx.request.ip;
-  console.log(`koa-router: client(${client}) request.(/order/delete/${id})`);
   let query =
     `DELETE FROM
      zix.order
