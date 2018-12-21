@@ -36,10 +36,10 @@ for (i in costTableNames) {
     costs.forEach(async (cost) => {
       var query =
         `UPDATE zix.${tableName}_cost SET
-        retail_cost = ?,
-        supply_cost = ?
+        rtl_cost = ?,
+        spl_cost = ?
         WHERE ${prefix}_id = ?;`;
-      var elements = [cost.retail_cost, cost.supply_cost, cost[`${prefix}_id`]];
+      var elements = [cost.rtl_cost, cost.spl_cost, cost[`${prefix}_id`]];
       success = success && await dbpool.fetch(query, elements);
     });
     ctx.body = success;

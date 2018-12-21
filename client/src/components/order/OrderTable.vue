@@ -87,7 +87,6 @@ export default {
       console.log('search button clicked.');
     },
     newButtonTapped() {
-      console.log('newButtonTapped');
       this.$router.push({name: 'OrderNew'})
     },
     selectCell(id) {
