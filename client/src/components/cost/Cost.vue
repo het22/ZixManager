@@ -80,10 +80,10 @@ export default {
     }
   },
   created() {
-    this.fetchMemberDetailData();
+    this.fetchCostData();
   },
   methods: {
-    fetchMemberDetailData() {
+    fetchCostData() {
       console.log('cost infor requested');
       const id = this.member_id;
       const costs = ['wallpaper', 'plate', 'labor', 'subsidary'];

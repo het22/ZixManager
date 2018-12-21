@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="text-form">
+<div class="common-form">
   <div class="columns">
     <div class="column is-3">
       <label :for="title">
@@ -39,12 +39,12 @@ export default {
 </script>
 
 <style lang="css">
-.text-form {
+.common-form {
   margin-left: 10px;
   margin-bottom: 10px;
 }
 
-.text-form .title {
+.common-form .title {
   font-size: 15px;
   font-weight: 400;
 }

@@ -136,4 +136,15 @@ require('vue-flash-message/dist/vue-flash-message.min.css');
   transform: translateY(20px);
   opacity: 0;
 }
+
+/* form commons */
+.common-form {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.common-form .title {
+  font-size: 15px;
+  font-weight: 400;
+}
 </style>

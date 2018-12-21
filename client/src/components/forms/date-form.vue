@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="date-form">
+<div class="common-form">
   <div class="columns">
     <div class="column is-3">
       <label :for="title">
@@ -44,16 +44,13 @@ export default {
 </script>
 
 <style lang="css">
-.date-form {
+.common-form {
   margin-left: 10px;
   margin-bottom: 10px;
 }
 
-.date-form .title {
+.common-form .title {
   font-size: 15px;
   font-weight: 400;
-}
-.datepicker {
-  width: 100%;
 }
 </style>

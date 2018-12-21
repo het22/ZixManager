@@ -1,22 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 // Main Layout: DashBoard
 import DashBoard from '@/components/DashBoard.vue'
+
 // Contents
 import Home from '@/components/Home.vue'
 import Notification from '@/components/Notification.vue'
+
 // Member Pages
 import Member from '@/components/member/Member.vue'
 import MemberTable from '@/components/member/MemberTable.vue'
 import MemberDetail from '@/components/member/MemberDetail.vue'
 import MemberNew from '@/components/member/MemberNew.vue'
+
 // Order Pages
 import Order from '@/components/order/Order.vue'
 import OrderTable from '@/components/order/OrderTable.vue'
 import OrderDetail from '@/components/order/OrderDetail.vue'
 import OrderNew from '@/components/order/OrderNew.vue'
+
 // Cost Pages
 import Cost from '@/components/cost/Cost.vue'
+
 // Not Found
 import NotFound from '@/components/NotFound.vue'
 
@@ -26,7 +32,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '',
       component: DashBoard,
       children: [
         {
@@ -44,12 +50,12 @@ export default new Router({
               component: MemberTable
             },
             {
-              path: '/member/new',
+              path: './new',
               name: 'MemberNew',
               component: MemberNew
             },
             {
-              path: '/member/detail/:member_id',
+              path: './detail/:member_id',
               name: 'MemberDetail',
               component: MemberDetail,
               props: true
@@ -66,12 +72,12 @@ export default new Router({
               component: OrderTable
             },
             {
-              path: '/order/new',
+              path: './new',
               name: 'OrderNew',
               component: OrderNew
             },
             {
-              path: '/order/detail/:order_id',
+              path: './detail/:order_id',
               name: 'OrderDetail',
               component: OrderDetail,
               props: true
