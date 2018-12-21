@@ -31,8 +31,8 @@
     <div class="column is-6">
       <div class="box">
         <div class="title">개인정보</div>
-        <inputForm title="회원번호" :value="detail.mem_id" disabled="true"></inputForm>
-        <inputForm title="이름" :value.sync="detail.mem_username"></inputForm>
+        <inputForm title="회원번호" :value="detail.mem_id" disabled="true" essential="true"></inputForm>
+        <inputForm title="이름" :value.sync="detail.mem_username" essential="true"></inputForm>
         <inputForm title="아이디" :value.sync="detail.mem_userid"></inputForm>
         <inputForm title="이메일" :value.sync="detail.mem_email"></inputForm>
         <inputForm title="연락처" :value.sync="detail.mem_phone"></inputForm>

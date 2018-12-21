@@ -3,7 +3,12 @@
   <div class="columns">
     <div class="column is-3">
       <label :for="title">
-        <div class="title">{{title}}</div>
+        <div v-if="essential">
+          <div class="title" style="font-weight: bold">{{title}}</div>
+        </div>
+        <div v-else>
+          <div class="title">{{title}}</div>
+        </div>
       </label>
     </div>
     <div class="column">
@@ -23,7 +28,8 @@ export default {
   props: [
     'disabled',
     'title',
-    'value'
+    'value',
+    'essential'
   ],
   computed: {
     propValue: {
@@ -39,13 +45,4 @@ export default {
 </script>
 
 <style lang="css">
-.common-form {
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
-
-.common-form .title {
-  font-size: 15px;
-  font-weight: 400;
-}
 </style>

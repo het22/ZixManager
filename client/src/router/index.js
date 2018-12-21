@@ -52,12 +52,12 @@ export default new Router({
               component: MemberTable
             },
             {
-              path: './new',
+              path: '/member/new',
               name: 'MemberNew',
               component: MemberNew
             },
             {
-              path: './detail/:member_id',
+              path: '/member/detail/:member_id',
               name: 'MemberDetail',
               component: MemberDetail,
               props: true
@@ -74,12 +74,12 @@ export default new Router({
               component: OrderTable
             },
             {
-              path: './new',
+              path: '/order/new',
               name: 'OrderNew',
               component: OrderNew
             },
             {
-              path: './detail/:order_id',
+              path: '/order/detail/:order_id',
               name: 'OrderDetail',
               component: OrderDetail,
               props: true

@@ -25,7 +25,7 @@
     <div class="column is-4">
       <div class="box">
         <div class="title">시공정보</div>
-        <inputForm title="주문회원" :value.sync="detail.mem_id"></inputForm>
+        <inputForm title="회원번호" :value.sync="detail.mem_id" essential="true"></inputForm>
         <dateForm title="상담일" :value.sync="detail.ord_date_consult"></dateForm>
         <dateForm title="시공일" :value.sync="detail.ord_date_construct"></dateForm>
         <inputForm title="샘플주소" :value.sync="detail.ord_adr_sample"></inputForm>

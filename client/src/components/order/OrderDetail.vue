@@ -32,7 +32,7 @@
       <div class="box">
         <div class="title">시공정보</div>
         <linkForm title="주문회원" :value="detail.mem_username+` (${detail.mem_userid})`" :mem_id="detail.mem_id"></linkForm>
-        <inputForm title="주문번호" :value="detail.ord_id" disabled="true"></inputForm>
+        <inputForm title="주문번호" :value="detail.ord_id" disabled="true" essential="true"></inputForm>
         <dateForm title="상담일" :value.sync="detail.ord_date_consult"></dateForm>
         <dateForm title="시공일" :value.sync="detail.ord_date_construct"></dateForm>
         <inputForm title="샘플주소" :value.sync="detail.ord_adr_sample"></inputForm>

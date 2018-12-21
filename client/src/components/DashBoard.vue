@@ -3,8 +3,8 @@
   <!-- Navigation bar -->
   <navbar/>
   <!-- Contents -->
-  <section class="columns contents">
-    <aside class="column is-2 sidemenu is-fullheight">
+  <section class="columns" style="margin:0; min-height: 100vh">
+    <aside class="column is-2 sidemenu">
       <div class="menus">
         <p class="section">General</p>
         <router-link :to="{name: 'Home'}">
@@ -42,7 +42,7 @@
         </router-link>
       </div>
     </aside>
-    <div class="column">
+    <div class="column contents">
       <router-view/>
     </div>
   </section>
@@ -115,6 +115,11 @@ require('vue-flash-message/dist/vue-flash-message.min.css');
 .sidemenu .menus .item.active:hover {
   background-color: #00D1B3;
   color: #FFFFFF;
+}
+
+/* content */
+.contents {
+  background-color: #FFFFFF;
 }
 
 /* 플래시 메세지 */

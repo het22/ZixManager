@@ -3,7 +3,7 @@
   <div class="columns">
     <div class="column is-3">
       <label :for="title">
-        <div class="title">{{title}}</div>
+        <div class="title" style="font-weight: bold">{{title}}</div>
       </label>
     </div>
     <div class="column">
@@ -26,13 +26,4 @@ export default {
 </script>
 
 <style lang="css">
-.common-form {
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
-
-.common-form .title {
-  font-size: 15px;
-  font-weight: 400;
-}
 </style>

@@ -36,13 +36,4 @@ export default {
 </script>
 
 <style lang="css">
-.common-form {
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
-
-.common-form .title {
-  font-size: 15px;
-  font-weight: 400;
-}
 </style>

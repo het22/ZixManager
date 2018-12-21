@@ -19,7 +19,7 @@
         <!-- 제목 -->
         <div class="title">신규회원</div>
         <!-- 입력 폼 -->
-        <inputForm title="이름" :value.sync="detail.mem_username"></inputForm>
+        <inputForm title="이름" :value.sync="detail.mem_username" essential="true"></inputForm>
         <inputForm title="아이디" :value.sync="detail.mem_userid"></inputForm>
         <inputForm title="이메일" :value.sync="detail.mem_email"></inputForm>
         <inputForm title="연락처" :value.sync="detail.mem_phone"></inputForm>
