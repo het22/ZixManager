@@ -15,4 +15,8 @@ const cost = require('./cost.js');
 router.use(cost.routes());
 router.use(cost.allowedMethods());
 
+const schedule = require('./schedule.js');
+router.use(schedule.routes());
+router.use(schedule.allowedMethods());
+
 module.exports = router;

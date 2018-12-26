@@ -67,7 +67,6 @@
 import inputForm from '../forms/input-form.vue'
 import textForm from '../forms/text-form.vue'
 import dateForm from '../forms/date-form.vue'
-import linkForm from '../forms/link-form.vue'
 import areaForm from '../forms/area-form.vue'
 import selectForm from '../forms/select-form.vue'
 import radioForm from '../forms/radio-form.vue'
@@ -78,7 +77,6 @@ export default {
     inputForm,
     textForm,
     dateForm,
-    linkForm,
     areaForm,
     selectForm,
     radioForm,

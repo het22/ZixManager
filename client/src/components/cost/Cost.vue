@@ -4,10 +4,10 @@
   <nav class="level">
     <div class="level-left" style="font-size: 15px;">
       <p class="level-item">
-        <div style="color:#ff3860; font-weight:bold; width: 100px">■ 공급가</div>
+        <div style="color:#ff3860; font-weight:bold; width: 100px">■ 공급가격</div>
       </p>
       <p class="level-item">
-        <div style="color:#00D1B3; font-weight:bold; width: 100px">■ 소비자가</div>
+        <div style="color:#00D1B3; font-weight:bold; width: 100px">■ 소비자가격</div>
       </p>
     </div>
     <div class="level-right" style="font-weight: bold;">
