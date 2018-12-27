@@ -124,7 +124,6 @@ export default {
   },
   methods: {
     fetchOrderDetailData() {
-      console.log('member detail infor requested');
       const id = this.order_id;
       this.$http.get(`/article/order/${id}`)
         .then((res) => {
@@ -133,7 +132,6 @@ export default {
             this.$router.replace({name: 'NotFound'})
           }
           this.detail = data[0];
-          console.log('member detail infor loaded');
         })
     },
     fetchWallpaperOptions() {
@@ -158,7 +156,6 @@ export default {
       this.$router.go(-1);
     },
     saveButtonTapped() {
-      console.log(this.detail);
       this.flash('수정한 내용 전송 중...', 'warning', {
         timeout: this.constants.FLASH_TIMEOUT
       })

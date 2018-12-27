@@ -84,7 +84,6 @@ export default {
   },
   methods: {
     fetchCostData() {
-      console.log('cost infor requested');
       const id = this.member_id;
       const costs = ['wallpaper', 'plate', 'labor', 'subsidary'];
       costs.forEach((cost) => {
@@ -92,7 +91,6 @@ export default {
           .then((res) => {
             const data = res.data;
             this[cost+'_cost'] = data;
-            console.log(`${cost} infor loaded`);
           })
       });
     },

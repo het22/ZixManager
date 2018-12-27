@@ -86,7 +86,6 @@ export default {
   },
   methods: {
     fetchMemberDetailData() {
-      console.log('member detail infor requested');
       const id = this.member_id;
       this.$http.get(`/article/member/${id}`)
         .then((res) => {
@@ -95,11 +94,10 @@ export default {
             this.$router.replace({name: 'NotFound'})
           }
           this.detail = data[0];
-          console.log('member detail infor loaded');
         })
     },
     fetchOrdersData() {
-      console.log('member orders infor requested');
+
     },
     backButtonTapped() {
       this.$router.go(-1);

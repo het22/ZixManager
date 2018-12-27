@@ -4,7 +4,6 @@ const router = new Router({
 });
 const dbpool = require('../db/dbpool.js');
 
-//
 router.get('/', async (ctx, next) => {
   console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
   let query =

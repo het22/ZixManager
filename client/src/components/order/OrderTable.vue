@@ -67,16 +67,15 @@ export default {
   },
   methods: {
     fetchCustomerData() {
-      console.log('order infor requested');
       this.$http.get('/article/order')
         .then((res) => {
           const data = res.data;
           if (!data) {
-            console.log('order infor load failed');
-            return
+            this.flash('로드 실패', 'error', {
+              timeout: constants.FLASH_TIMEOUT
+            });
           } else {
             this.orders = data;
-            console.log('order infor loaded('+data.length+' rows)');
           }
         })
     },
@@ -84,7 +83,7 @@ export default {
       this.keyword = e.target.value;
     },
     searchButtonTapped() {
-      console.log('search button clicked.');
+
     },
     newButtonTapped() {
       this.$router.push({name: 'OrderNew'})

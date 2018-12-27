@@ -176,28 +176,16 @@ export default {
         // 상담일 기준 확인
         var consultDate = new Date(o.ord_date_consult).setHours(0, 0, 0, 0);
         switch (consultDate) {
-          case d0:
-            this.schedule.consult.d0.push(o);
-            break;
-          case dm1:
-            this.schedule.consult.dp1.push(o);
-            break;
-          case dm4:
-            this.schedule.consult.dp4.push(o);
-            break;
+          case d0:  this.schedule.consult.d0.push(o); break;
+          case dm1: this.schedule.consult.dp1.push(o);break;
+          case dm4: this.schedule.consult.dp4.push(o);break;
         }
         // 시공일 기준 확인
         var constructDate = new Date(o.ord_date_construct).setHours(0, 0, 0, 0);
         switch (constructDate) {
-          case dp1:
-            this.schedule.construct.dm1.push(o);
-            break;
-          case d0:
-            this.schedule.construct.d0.push(o);
-            break;
-          case dm1:
-            this.schedule.construct.dp1.push(o);
-            break;
+          case dp1: this.schedule.construct.dm1.push(o);break;
+          case d0:  this.schedule.construct.d0.push(o); break;
+          case dm1: this.schedule.construct.dp1.push(o);break;
         }
       }
     }
@@ -229,7 +217,7 @@ function calBusiDay(date, offset) {
   font-size: 36px;
 }
 .schedule-wrapper .subtitle {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
 }
 .schedule-wrapper .remark {
@@ -239,5 +227,9 @@ function calBusiDay(date, offset) {
 }
 .schedule-wrapper .schedule {
   margin: 12px 0px 0px 6px;
+}
+
+.schedule-wrapper .icon {
+  color: grey;
 }
 </style>
