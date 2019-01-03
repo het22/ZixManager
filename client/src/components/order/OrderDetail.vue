@@ -27,11 +27,12 @@
   </nav>
 
   <div class="columns">
+
     <!-- 시공정보 컬럼 -->
     <div class="column is-4">
       <div class="box">
         <div class="title">시공정보</div>
-        <linkForm title="주문회원" :value="detail.mem_username+` (${detail.mem_userid})`" :mem_id="detail.mem_id"></linkForm>
+        <memberLinkForm title="주문회원" :value="detail.mem_username+` (${detail.mem_userid})`" :mem_id="detail.mem_id"></memberLinkForm>
         <inputForm title="주문번호" :value="detail.ord_id" disabled="true" essential="true"></inputForm>
         <dateForm title="상담일" :value.sync="detail.ord_date_consult"></dateForm>
         <dateForm title="시공일" :value.sync="detail.ord_date_construct"></dateForm>
@@ -40,87 +41,63 @@
         <textForm title="비고" :value.sync="detail.ord_remarks"></textForm>
       </div>
     </div>
+
     <!-- 시공내용 컬럼 -->
     <div class="column is-4">
       <div class="box">
         <div class="title">시공내용</div>
-        <areaForm title="평형" :value.sync="detail.ord_spl_area"></areaForm>
-        <selectForm title="방개수" :value.sync="detail.ord_room_count" :options="room_count_options"></selectForm>
-        <selectForm title="벽지종류" :value.sync="detail.wlp_id" :options="wlp_options"></selectForm>
-        <radioForm title="벽지개수" :value.sync="detail.ord_wlp_count" :options="wlp_count_options"></radioForm>
-        <selectForm title="장판종류" :value.sync="detail.plt_id" :options="plt_options"></selectForm>
-        <radioForm title="걸레받이" :value.sync="detail.ord_baseboard" :options="baseboard_options"></radioForm>
-        <optionForm title="베란다확장" :value.sync="detail.ord_veranda"></optionForm>
-        <optionForm title="복층옵션" :value.sync="detail.ord_duplex"></optionForm>
-        <optionForm title="가구있음" :value.sync="detail.ord_occupied"></optionForm>
+        <radioForm title="단위" :value.sync="detail.ord_area_isspl" :options="this.$constant.OPTIONS.AREA_METHOD"></radioForm>
+        <selectForm title="평형" :value.sync="detail.ord_area" :options="((detail.ord_area_isspl||0)==0) ? this.$constant.OPTIONS.SPL_RANGE : this.$constant.OPTIONS.RTL_RANGE"></selectForm>
+        <selectForm title="방개수" :value.sync="detail.ord_room_count" :options="this.$constant.OPTIONS.ROOM_COUNT"></selectForm>
+        <optionForm title="베란다확장" :value.sync="detail.ord_opt_veranda"></optionForm>
+        <optionForm title="천장시공" :value.sync="detail.ord_opt_ceiling"></optionForm>
+        <optionForm title="올 화이트 패키지" :value.sync="detail.ord_opt_whitepack"></optionForm>
+        <hr>
+        <selectForm title="벽지종류" :value.sync="detail.wlp_id" :options="this.$constant.OPTIONS.WLP"></selectForm>
+        <radioForm title="벽지개수" :value.sync="detail.ord_wlp_count" :options="this.$constant.OPTIONS.WLP_COUNT"></radioForm>
+        <hr>
+        <selectForm title="장판종류" :value.sync="detail.plt_id" :options="this.$constant.OPTIONS.PLT"></selectForm>
+        <radioForm title="시공범위" :value.sync="detail.ord_range" :options="this.$constant.OPTIONS.PLT_RANGE"></radioForm>
+        <radioForm title="걸레받이" :value.sync="detail.ord_baseboard" :options="this.$constant.OPTIONS.BASEBOARD_RANGE"></radioForm>
+        <hr>
+        <optionForm title="거주중/가구있음" :value.sync="detail.ord_opt_occupied"></optionForm>
+        <optionForm title="시공당일 이사" :value.sync="detail.ord_opt_moveonday"></optionForm>
+        <optionForm title="복층형 구조" :value.sync="detail.ord_opt_duplex"></optionForm>
+        <optionForm title="우물형 천장" :value.sync="detail.ord_opt_wellshaped"></optionForm>
+        <optionForm title="기타 특수환경" :value.sync="detail.ord_opt_special"></optionForm>
       </div>
     </div>
+
     <!-- 예상가격 컬럼 -->
     <div class="column">
       <div class="box">
         <div class="title">예상가격</div>
-        <inputForm title="입력가격" :value.sync="detail.ord_price"></inputForm>
+        <inputForm title="입력가격" :value.sync="detail.ord_custom_price"></inputForm>
         <inputForm title="공급가격" :value="detail.ord_rtl_price" disabled="true"></inputForm>
         <inputForm title="소비자가격" :value="detail.ord_spl_price" disabled="true"></inputForm>
         <inputForm title="계약금" :value="detail.ord_down_price" disabled="true"></inputForm>
         <optionForm title="결제여부" :value.sync="detail.ord_paid"></optionForm>
       </div>
     </div>
+
   </div>
 </div>
 </template>
 
 <script>
-import inputForm from '../forms/input-form.vue'
-import textForm from '../forms/text-form.vue'
-import dateForm from '../forms/date-form.vue'
-import linkForm from '../forms/member-link-form.vue'
-import areaForm from '../forms/area-form.vue'
-import selectForm from '../forms/select-form.vue'
-import radioForm from '../forms/radio-form.vue'
-import optionForm from '../forms/option-form.vue'
-let constants = require('../../constants.js')
+import { InputForm, TextForm, DateForm, SelectForm, RadioForm, OptionForm, MemberLinkForm } from '../forms'
 export default {
   components: {
-    inputForm,
-    textForm,
-    dateForm,
-    linkForm,
-    areaForm,
-    selectForm,
-    radioForm,
-    optionForm
+    InputForm, TextForm, DateForm, SelectForm, RadioForm, OptionForm, MemberLinkForm
   },
   props: ['order_id'],
   data() {
     return {
-      constants: constants,
-      detail: {},
-      price: {},
-      wlp_options: [],
-      plt_options: [],
-      room_count_options: [
-        {name: '1개', value: 1},
-        {name: '2개', value: 2},
-        {name: '3개', value: 3},
-        {name: '4개', value: 4},
-        {name: '5개', value: 5},
-      ],
-      wlp_count_options: [
-        {name: '1개', value: 1},
-        {name: '2개', value: 2},
-        {name: '3개', value: 3}
-      ],
-      baseboard_options: [
-        {name: '집전체', value: 1},
-        {name: '방만', value: 2}
-      ]
+      detail: {}
     }
   },
   created() {
     this.fetchOrderDetailData();
-    this.fetchWallpaperOptions();
-    this.fetchPlateOptions();
   },
   methods: {
     fetchOrderDetailData() {
@@ -134,30 +111,12 @@ export default {
           this.detail = data[0];
         })
     },
-    fetchWallpaperOptions() {
-      this.$http.get(`/article/cost/wallpaper`)
-        .then((res) => {
-          const data = res.data;
-          data.forEach((row) => {
-            this.wlp_options.push({name: row.wlp_name, value: row.wlp_id});
-          })
-        })
-    },
-    fetchPlateOptions() {
-      this.$http.get(`/article/cost/plate`)
-        .then((res) => {
-          const data = res.data;
-          data.forEach((row) => {
-            this.plt_options.push({name: row.plt_name, value: row.plt_id});
-          })
-        })
-    },
     backButtonTapped() {
       this.$router.go(-1);
     },
     saveButtonTapped() {
-      this.flash('수정한 내용 전송 중...', 'warning', {
-        timeout: this.constants.FLASH_TIMEOUT
+      this.flash(this.$constant.MESSAGE.ORDER.MODIFY.START, 'warning', {
+        timeout: this.this.$constant.FLASH_TIMEOUT
       })
       const id = this.order_id;
       this.$http.post(`/article/order/modify/${id}`, this.detail)
@@ -165,20 +124,20 @@ export default {
           const success = res.data;
           setTimeout(() => {
             if (success) {
-              this.flash('수정 완료', 'success', {
-                timeout: this.constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.ORDER.MODIFY.SUCCESS, 'success', {
+                timeout: this.this.$constant.FLASH_TIMEOUT
               })
             } else {
-              this.flash('수정 실패', 'error', {
-                timeout: this.constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.ORDER.MODIFY.FAIL, 'error', {
+                timeout: this.this.$constant.FLASH_TIMEOUT
               })
             }
-          }, this.constants.FLASH_DELAY);
+          }, this.this.$constant.FLASH_DELAY);
         })
     },
     deleteButtonTapped() {
-      this.flash('삭제 요청 중...', 'warning', {
-        timeout: this.constants.FLASH_TIMEOUT
+      this.flash(this.$constant.MESSAGE.ORDER.DELETE.START, 'warning', {
+        timeout: this.this.$constant.FLASH_TIMEOUT
       })
       const id = this.order_id;
       this.$http.post(`/article/order/delete/${id}`)
@@ -186,16 +145,16 @@ export default {
           const success = res.data;
           setTimeout(() => {
             if (success) {
-              this.flash('삭제 완료', 'success', {
-                timeout: this.constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.ORDER.DELETE.SUCCESS, 'success', {
+                timeout: this.this.$constant.FLASH_TIMEOUT
               })
               this.$router.go(-1);
             } else {
-              this.flash('삭제 실패', 'error', {
-                timeout: this.constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.ORDER.DELETE.FAIL, 'error', {
+                timeout: this.this.$constant.FLASH_TIMEOUT
               })
             }
-          }, this.constants.FLASH_DELAY);
+          }, this.this.$constant.FLASH_DELAY);
         })
     }
   }

@@ -48,7 +48,7 @@
   <!-- empty -->
   <div class="empty" v-if="orders.length==0">
     <span class="icon"><i class="fas fa-table"></i></span>
-    <span class="content">{{constants.EMPTY_ORDERTABLE_MESSAGE}}</span>
+    <span class="content">{{this.$constant.EMPTY_ORDERTABLE_MESSAGE}}</span>
   </div>
 </div>
 </template>
@@ -58,21 +58,20 @@ export default {
   data() {
     return {
       keyword: '',
-      orders: [],
-      constants: require('../../constants.js')
+      orders: []
     }
   },
   created() {
-    this.fetchCustomerData();
+    this.fetchOrdersData();
   },
   methods: {
-    fetchCustomerData() {
+    fetchOrdersData() {
       this.$http.get('/article/order')
         .then((res) => {
           const data = res.data;
           if (!data) {
             this.flash('로드 실패', 'error', {
-              timeout: constants.FLASH_TIMEOUT
+              timeout: this.$constant.FLASH_TIMEOUT
             });
           } else {
             this.orders = data;
@@ -106,19 +105,15 @@ export default {
   margin-left: 10px;
   text-align: center;
 }
-
 .order-wrapper .control .input {
   width: 300px;
 }
-
 .order-wrapper .control .button {
   font-weight: 600;
 }
-
 .order-wrapper .control .button:hover {
   color: grey;
 }
-
 .order-wrapper .empty {
   font-weight: bold;
   color: grey;

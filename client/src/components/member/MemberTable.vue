@@ -48,7 +48,7 @@
   <!-- empty -->
   <div class="empty" v-if="members.length==0">
     <span class="icon"><i class="fas fa-table"></i></span>
-    <span class="content">{{constants.EMPTY_MEMBERTABLE_MESSAGE}}</span>
+    <span class="content">{{this.$constant.EMPTY_MEMBERTABLE_MESSAGE}}</span>
   </div>
 </div>
 </template>
@@ -58,8 +58,7 @@ export default {
   data() {
     return {
       keyword: '',
-      members: [],
-      constants: require('../../constants.js')
+      members: []
     }
   },
   created() {
@@ -72,10 +71,11 @@ export default {
           const data = res.data;
           if (!data) {
             this.flash('로드 실패', 'error', {
-              timeout: constants.FLASH_TIMEOUT
+              timeout: this.$constant.FLASH_TIMEOUT
             })
           } else {
             this.members = data;
+            this.members.shift();
           }
         })
     },
@@ -106,19 +106,15 @@ export default {
   margin-left: 10px;
   text-align: center;
 }
-
 .member-wrapper .control .input {
   width: 300px;
 }
-
 .member-wrapper .control .button {
   font-weight: 600;
 }
-
 .member-wrapper .control .button:hover {
   color: grey;
 }
-
 .member-wrapper .empty {
   font-weight: bold;
   color: grey;

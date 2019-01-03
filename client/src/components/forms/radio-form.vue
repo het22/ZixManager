@@ -7,10 +7,6 @@
       </label>
     </div>
     <div class="column">
-      <div class="control" style="margin-bottom: 5px">
-        <input type="radio" class="is-checkradio" :id="title" :name="title" :value="null" v-model="propValue">
-        <label :for="title" style="margin: 0px">선택안함</label>
-      </div>
       <div class="control" v-for="option in options" style="margin-bottom: 5px">
         <input type="radio" class="is-checkradio" :id="title+option.name" :name="title" :value="option.value" v-model="propValue">
         <label :for="title+option.name" style="margin: 0px">{{option.name}}</label>
@@ -31,7 +27,7 @@ export default {
   computed: {
     propValue: {
       get() {
-        return this.value
+        return this.value || this.options[0].value;
       },
       set(newVal) {
         this.$emit('update:value', newVal);

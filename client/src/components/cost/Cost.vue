@@ -24,7 +24,7 @@
     <div class="column is-4">
       <div class="box">
         <div class="title">벽지</div>
-        <div v-for="cost in wallpaper_cost">
+        <div v-for="cost in this.cost.wlp_cost">
           <costForm
           :title="cost.wlp_name"
           :rtl_cost.sync="cost.rtl_cost"
@@ -35,7 +35,7 @@
     <div class="column is-4">
       <div class="box">
         <div class="title">장판</div>
-        <div v-for="cost in plate_cost">
+        <div v-for="cost in this.cost.plt_cost">
           <costForm
           :title="cost.plt_name"
           :rtl_cost.sync="cost.rtl_cost"
@@ -46,13 +46,13 @@
     <div class="column">
       <div class="box">
         <div class="title">기타</div>
-        <div v-for="cost in labor_cost">
+        <div v-for="cost in this.cost.lab_cost">
           <costForm
           :title="cost.lab_name"
           :rtl_cost.sync="cost.rtl_cost"
           :spl_cost.sync="cost.spl_cost"></costForm>
         </div>
-        <div v-for="cost in subsidary_cost">
+        <div v-for="cost in this.cost.sbd_cost">
           <costForm
           :title="cost.sbd_name"
           :rtl_cost.sync="cost.rtl_cost"
@@ -65,55 +65,39 @@
 </template>
 
 <script>
-import costForm from '../forms/cost-form.vue'
-import constants from '../../constants.js'
+import { CostForm } from '../forms'
 export default {
   components: {
-    costForm
+    CostForm
   },
   data() {
     return {
-      wallpaper_cost: [],
-      plate_cost: [],
-      labor_cost: [],
-      subsidary_cost: []
+      cost: JSON.parse(JSON.stringify(this.$constant.COST))
     }
   },
-  created() {
-    this.fetchCostData();
-  },
   methods: {
-    fetchCostData() {
-      const id = this.member_id;
-      const costs = ['wallpaper', 'plate', 'labor', 'subsidary'];
-      costs.forEach((cost) => {
-        this.$http.get(`/article/cost/${cost}`)
-          .then((res) => {
-            const data = res.data;
-            this[cost+'_cost'] = data;
-          })
-      });
-    },
     savebuttonTapped() {
-      this.flash('수정한 내용 전송 중...', 'warning', {
-        timeout: constants.FLASH_TIMEOUT
+      this.flash(this.$constant.MESSAGE.COST.MODIFY.START, 'warning', {
+        timeout: this.$constant.FLASH_TIMEOUT
       })
-      const costs = ['wallpaper', 'plate', 'labor', 'subsidary'];
-      costs.forEach((cost) => {
-        this.$http.post(`/article/cost/${cost}/save`, this[cost+'_cost'])
+      const costPrefix = ['wlp', 'plt', 'lab', 'sbd'];
+      costPrefix.forEach((prefix) => {
+        this.$http.post(`/article/cost/${prefix}/save`, this.cost[prefix+'_cost'])
           .then((res) => {
             const success = res.data;
             setTimeout(() => {
               if (success) {
-                this.flash(constants.MESSAGE_SUCCESS.MODIFY[cost+'_cost'], 'success', {
-                  timeout: constants.FLASH_TIMEOUT
+                this.$constant.COST[prefix+'_cost'] = this.cost[prefix+'_cost'];
+                this.flash(this.$constant.MESSAGE.COST.MODIFY.SUCCESS, 'success', {
+                  timeout: this.$constant.FLASH_TIMEOUT
                 })
               } else {
-                this.flash(constants.MESSAGE_FAIL.MODIFY[cost+'_cost'], 'error', {
-                  timeout: constants.FLASH_TIMEOUT
+                this.cost[prefix+'_cost'] = this.$constant.COST[prefix+'_cost'];
+                this.flash(this.$constant.MESSAGE.COST.MODIFY.FAIL, 'error', {
+                  timeout: this.$constant.FLASH_TIMEOUT
                 })
               }
-            }, constants.FLASH_DELAY);
+            }, this.$constant.FLASH_DELAY);
           })
       });
     }

@@ -40,7 +40,7 @@ export default new Router({
         {
           path: '',
           name: 'Home',
-          component: Schedule
+          component: Home
         },
         {
           path: '/member',

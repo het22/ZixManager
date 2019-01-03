@@ -27,6 +27,7 @@
   </nav>
 
   <div class="columns">
+
     <!-- 개인정보 컬럼 -->
     <div class="column is-6">
       <div class="box">
@@ -41,6 +42,7 @@
         <textForm title="비고" :value.sync="detail.mem_remarks"></textForm>
       </div>
     </div>
+
     <!-- 시공 목록 컬럼 -->
     <div class="column">
       <div class="box">
@@ -52,32 +54,26 @@
         </div>
         <div v-else class="empty">
           <span class="icon"><i class="far fa-file-alt"></i></span>
-          <span class="content">{{constants.EMPTY_ORDERTABLE_MESSAGE}}</span>
+          <span class="content">{{this.$constant.EMPTY_ORDERTABLE_MESSAGE}}</span>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 </template>
 
 <script>
-import inputForm from '../forms/input-form.vue'
-import textForm from '../forms/text-form.vue'
-import dateForm from '../forms/date-form.vue'
-import constants from '../../constants.js'
-
+import { InputForm, TextForm, DateForm } from '../forms'
 export default {
   components: {
-    inputForm,
-    textForm,
-    dateForm
+    InputForm, TextForm, DateForm
   },
   props: ['member_id'],
   data() {
     return {
       detail: {},
-      orders: [],
-      constants: constants
+      orders: []
     }
   },
   created() {
@@ -103,8 +99,8 @@ export default {
       this.$router.go(-1);
     },
     saveButtonTapped() {
-      this.flash('수정한 내용 전송 중...', 'warning', {
-        timeout: constants.FLASH_TIMEOUT
+      this.flash(this.$constant.MESSAGE.MEMBER.MODIFY.START, 'warning', {
+        timeout: this.$constant.FLASH_TIMEOUT
       })
       const id = this.member_id;
       this.$http.post(`/article/member/modify/${id}`, this.detail)
@@ -112,20 +108,20 @@ export default {
           const success = res.data;
           setTimeout(() => {
             if (success) {
-              this.flash('수정 완료', 'success', {
-                timeout: constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.MEMBER.MODIFY.SUCCESS, 'success', {
+                timeout: this.$constant.FLASH_TIMEOUT
               })
             } else {
-              this.flash('수정 실패', 'error', {
-                timeout: constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.MEMBER.MODIFY.FAIL, 'error', {
+                timeout: this.$constant.FLASH_TIMEOUT
               })
             }
-          }, constants.FLASH_DELAY);
+          }, this.$constant.FLASH_DELAY);
         })
     },
     deleteButtonTapped() {
-      this.flash('삭제 요청 중...', 'warning', {
-        timeout: constants.FLASH_TIMEOUT
+      this.flash(this.$constant.MESSAGE.MEMBER.DELETE.START, 'warning', {
+        timeout: this.$constant.FLASH_TIMEOUT
       })
       const id = this.member_id;
       this.$http.post(`/article/member/delete/${id}`)
@@ -133,16 +129,16 @@ export default {
           const success = res.data;
           setTimeout(() => {
             if (success) {
-              this.flash('삭제 완료', 'success', {
-                timeout: constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.MEMBER.DELETE.SUCCESS, 'success', {
+                timeout: this.$constant.FLASH_TIMEOUT
               })
               this.$router.go(-1);
             } else {
-              this.flash('삭제 실패', 'error', {
-                timeout: constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.MEMBER.DELETE.FAIL, 'error', {
+                timeout: this.$constant.FLASH_TIMEOUT
               })
             }
-          }, constants.FLASH_DELAY);
+          }, this.$constant.FLASH_DELAY);
         })
     }
   }

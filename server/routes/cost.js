@@ -17,19 +17,33 @@ const costPrefix = [
   'sbd'
 ];
 
+// 전체 가격정보 요청 처리
+router.get(`/`, async (ctx, next) => {
+  console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
+  let costs = {};
+  for (i in costTableNames) {
+    let tableName = costTableNames[i];
+    let prefix = costPrefix[i];
+    let query = `SELECT * FROM zix.${tableName}_cost`;
+    costs[prefix+'_cost'] = await dbpool.fetch(query);
+  }
+  ctx.body = costs;
+});
+
+// 개별 가격정보에 대한 처리
 for (i in costTableNames) {
   let tableName = costTableNames[i];
   let prefix = costPrefix[i];
 
   // 가격정보 요청 처리
-  router.get(`/${tableName}`, async (ctx, next) => {
+  router.get(`/${prefix}`, async (ctx, next) => {
     console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
     let query = `SELECT * FROM zix.${tableName}_cost`;
     ctx.body = await dbpool.fetch(query)
   });
 
   // 가격정보 수정요청 처리
-  router.post(`/${tableName}/save`, async (ctx, next) => {
+  router.post(`/${prefix}/save`, async (ctx, next) => {
     console.log(`koa-router: client(ip: ${ctx.request.ip}) request.(${ctx.request.url})`);
     let costs = ctx.request.body;
     var success = true;

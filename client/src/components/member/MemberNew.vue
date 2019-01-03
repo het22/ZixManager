@@ -40,16 +40,10 @@
 </template>
 
 <script>
-import inputForm from '../forms/input-form.vue'
-import textForm from '../forms/text-form.vue'
-import dateForm from '../forms/date-form.vue'
-import constants from '../../constants.js'
-
+import { InputForm, TextForm, DateForm } from '../forms'
 export default {
   components: {
-    inputForm,
-    textForm,
-    dateForm
+    InputForm, TextForm, DateForm
   },
   data() {
     return {
@@ -61,24 +55,24 @@ export default {
       this.$router.go(-1);
     },
     registerbuttonTapped() {
-      this.flash('등록하는 중...', 'warning', {
-        timeout: constants.FLASH_TIMEOUT
+      this.flash(this.$constant.MESSAGE.MEMBER.REGISTER.START, 'warning', {
+        timeout: this.$constant.FLASH_TIMEOUT
       })
       this.$http.post(`/article/member/register`, this.detail)
         .then((res) => {
           const success = res.data;
           setTimeout(() => {
             if (success) {
-              this.flash('등록 완료', 'success', {
-                timeout: constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.MEMBER.REGISTER.SUCCESS, 'success', {
+                timeout: this.$constant.FLASH_TIMEOUT
               })
               this.$router.go(-1);
             } else {
-              this.flash('등록 실패', 'error', {
-                timeout: constants.FLASH_TIMEOUT
+              this.flash(this.$constant.MESSAGE.MEMBER.REGISTER.FAIL, 'error', {
+                timeout: this.$constant.FLASH_TIMEOUT
               })
             }
-          }, constants.FLASH_DELAY);
+          }, this.$constant.FLASH_DELAY);
         })
     }
   }
@@ -90,7 +84,6 @@ export default {
   margin: 20px;
   margin-left: 10px;
 }
-
 .member-new-wrapper .single {
   margin: 20px;
   margin-left: 10px;

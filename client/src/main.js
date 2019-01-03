@@ -8,6 +8,10 @@ import router from './router'
 import axios from 'axios'
 Vue.prototype.$http = axios;
 
+// global constant
+import constant from './util/constant.js'
+Vue.prototype.$constant = constant;
+
 // flash message module
 import VueFlashMessage from 'vue-flash-message';
 Vue.use(VueFlashMessage);
