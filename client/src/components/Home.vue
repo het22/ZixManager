@@ -15,7 +15,6 @@ export default {
 .home-wrapper {
   text-align: center;
 }
-
 .title.is-fullheight {
   height: 200px;
   line-height: 200px;
