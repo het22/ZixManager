@@ -23,7 +23,7 @@
         <inputForm title="아이디" :value.sync="detail.mem_userid"></inputForm>
         <inputForm title="이메일" :value.sync="detail.mem_email"></inputForm>
         <inputForm title="연락처" :value.sync="detail.mem_phone"></inputForm>
-        <inputForm title="주소" :value.sync="detail.mem_address_home"></inputForm>
+        <inputForm title="주소" :value.sync="detail.mem_adr_home"></inputForm>
         <dateForm title="생년월일" :value.sync="detail.mem_birthday"></dateForm>
         <textForm title="비고" :value.sync="detail.mem_remarks"></textForm>
         <!-- 등록 버튼 -->

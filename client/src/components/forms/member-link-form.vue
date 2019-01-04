@@ -7,9 +7,14 @@
       </label>
     </div>
     <div class="column">
-      <router-link :to="{name: 'MemberDetail', params: {member_id: mem_id || 0}}">
+      <div v-if="mem_id==0">
         {{value}}
-      </router-link>
+      </div>
+      <div v-else>
+        <router-link :to="{name: 'MemberDetail', params: {member_id: mem_id || 0}}">
+          {{value}}
+        </router-link>
+      </div>
     </div>
   </div>
 </div>
