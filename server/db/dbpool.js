@@ -19,7 +19,7 @@ exports.fetch = async (query, elements) => {
       // check query result
       if (res[0].length == 0) {
         console.log('mysql: query result is empty.');
-        return false;
+        return [];
       } else {
         console.log('mysql: query result is successfully returned!');
         return res[0];
