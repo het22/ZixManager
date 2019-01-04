@@ -7,14 +7,12 @@ const dbpool = require('../db/dbpool.js');
 const costTableNames = [
   'wallpaper',
   'plate',
-  'labor',
-  'subsidary'
+  'labor'
 ];
 const costPrefix = [
   'wlp',
   'plt',
-  'lab',
-  'sbd'
+  'lab'
 ];
 
 // 전체 가격정보 요청 처리
@@ -48,12 +46,26 @@ for (i in costTableNames) {
     let costs = ctx.request.body;
     var success = true;
     costs.forEach(async (cost) => {
-      var query =
-        `UPDATE zix.${tableName}_cost SET
-        rtl_cost = ?,
-        spl_cost = ?
-        WHERE ${prefix}_id = ?;`;
-      var elements = [cost.rtl_cost, cost.spl_cost, cost[`${prefix}_id`]];
+
+      // keyValues: `key=?, key=?, ... , key=?`
+      // elements: [value, value, ... , value]
+      var keyValues = ``;
+      var elements = [];
+      for (var key in cost) {
+        if (key==`${prefix}_id`) continue;
+        keyValues += `${key} = ?,`;
+        elements.push(cost[key]);
+      }
+      keyValues = keyValues.slice(0, -1);
+
+      var id = cost[`${prefix}_id`];
+      let query =
+        `UPDATE
+        zix.${tableName}_cost
+        SET
+        ${keyValues}
+        WHERE
+        ${prefix}_id = ${id}`
       success = success && await dbpool.fetch(query, elements);
     });
     ctx.body = success;

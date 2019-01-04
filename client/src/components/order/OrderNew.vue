@@ -36,7 +36,7 @@
     </div>
 
     <!-- 시공내용 컬럼 -->
-    <div class="column is-4">
+    <div class="column is-4" v-on:change="setPrice">
       <div class="box">
         <div class="title">시공내용</div>
         <radioForm title="단위" :value.sync="detail.ord_area_isspl" :options="this.$constant.OPTIONS.AREA_METHOD"></radioForm>
@@ -66,8 +66,8 @@
       <div class="box">
         <div class="title">예상가격</div>
         <inputForm title="입력가격" :value.sync="detail.ord_custom_price"></inputForm>
-        <inputForm title="공급가격" :value="detail.ord_rtl_price" disabled="true"></inputForm>
-        <inputForm title="소비자가격" :value="detail.ord_spl_price" disabled="true"></inputForm>
+        <inputForm title="공급가격" :value="detail.ord_spl_price" disabled="true"></inputForm>
+        <inputForm title="소비자가격" :value="detail.ord_rtl_price" disabled="true"></inputForm>
         <inputForm title="계약금" :value="detail.ord_down_price" disabled="true"></inputForm>
         <optionForm title="결제여부" :value.sync="detail.ord_paid"></optionForm>
       </div>
@@ -89,6 +89,12 @@ export default {
     }
   },
   methods: {
+    setPrice() {
+      const cal = require('../../util/calculate.js')
+      this.detail.ord_spl_price = cal.splPrice(this.detail);
+      this.detail.ord_rtl_price = cal.rtlPrice(this.detail);
+      this.detail.ord_down_price = cal.downPrice(this.detail);
+    },
     backButtonTapped() {
       this.$router.go(-1);
     },

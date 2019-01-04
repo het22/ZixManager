@@ -2,7 +2,7 @@ const CONSTANTS = {
 
   COST: {},
   ADMIN: {
-    PASSWORD: '1111'
+    PASSWORD: 'zixadmin'
   },
 
   // --------------------------------------------------

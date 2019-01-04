@@ -1,7 +1,8 @@
 <template lang="html">
 <div class="cost-wrapper">
-  <div v-if="locked" class="locked">
+
   <!-- locked screen -->
+  <div v-if="locked" class="locked">
     <div class="columns">
       <div class="column is-5">
       </div>
@@ -23,6 +24,8 @@
       </div>
     </div>
   </div>
+
+  <!-- unlocked screen -->
   <div v-else>
     <!-- 내부 네비게이션 바 -->
     <nav class="level">
@@ -54,6 +57,14 @@
             :rtl_cost.sync="cost.rtl_cost"
             :spl_cost.sync="cost.spl_cost"></costForm>
           </div>
+          <hr>
+          <div class="title">부자재비</div>
+          <div v-for="cost in this.cost.wlp_cost">
+            <costForm
+            :title="cost.wlp_name"
+            :rtl_cost.sync="cost.sbd_rtl_cost"
+            :spl_cost.sync="cost.sbd_spl_cost"></costForm>
+          </div>
         </div>
       </div>
       <div class="column is-4">
@@ -73,12 +84,6 @@
           <div v-for="cost in this.cost.lab_cost">
             <costForm
             :title="cost.lab_name"
-            :rtl_cost.sync="cost.rtl_cost"
-            :spl_cost.sync="cost.spl_cost"></costForm>
-          </div>
-          <div v-for="cost in this.cost.sbd_cost">
-            <costForm
-            :title="cost.sbd_name"
             :rtl_cost.sync="cost.rtl_cost"
             :spl_cost.sync="cost.spl_cost"></costForm>
           </div>
@@ -107,7 +112,6 @@ export default {
   },
   methods: {
     validate() {
-      console.log(`validate(${this.passwordInput})`);
       if (this.passwordInput==this.$constant.ADMIN.PASSWORD) {
         this.locked = false;
         this.cost = JSON.parse(JSON.stringify(this.$constant.COST));
@@ -117,7 +121,7 @@ export default {
       this.flash(this.$constant.MESSAGE.COST.MODIFY.START, 'warning', {
         timeout: this.$constant.FLASH_TIMEOUT
       })
-      const costPrefix = ['wlp', 'plt', 'lab', 'sbd'];
+      const costPrefix = ['wlp', 'plt', 'lab'];
       costPrefix.forEach((prefix) => {
         this.$http.post(`/article/cost/${prefix}/save`, this.cost[prefix + '_cost'])
           .then((res) => {

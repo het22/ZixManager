@@ -17,6 +17,7 @@ export default {
 }
 .title.is-fullheight {
   height: 200px;
-  line-height: 200px;
+  line-height: 300px;
+  font-size: 100px;
 }
 </style>
