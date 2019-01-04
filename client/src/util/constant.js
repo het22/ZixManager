@@ -1,6 +1,11 @@
 const CONSTANTS = {
 
   COST: {},
+  PRICE: {
+    PLATE: {
+      MIN: 280000
+    }
+  },
   ADMIN: {
     PASSWORD: 'zixadmin'
   },

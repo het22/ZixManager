@@ -8,17 +8,6 @@ var dbconfig = {
 };
 var dbpool = mysql.createPool(dbconfig);
 
-/*
-
-축약어 정리
-adr - address
-wlp - wallpaper
-plt - plate
-spl - supply
-rtl - retail
-
-*/
-
 exports.fetch = async (query, elements) => {
   // try database connection
   try {

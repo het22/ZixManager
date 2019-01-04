@@ -18,7 +18,8 @@ const downPrice = function(order) {
 const calPrice = function(order, costIsSupply) {
 
   // 가격상수 로드 --------------------------------------------------
-  var COST = require('./constant.js').COST;
+  var CONSTANTS = require('./constant.js');
+  var COST = CONSTANTS.COST;
 
   // 변수 입력 --------------------------------------------------
 
@@ -37,9 +38,9 @@ const calPrice = function(order, costIsSupply) {
 
   var rollCount = 0; // 자재 소요개수
   var paperCount = order.ord_wlp_count || 1; // 벽지개수
-  var laborCost = COST.lab_cost[0].spl_cost || 0; // 인건비
+  var laborCost = COST.lab_cost[0].spl_cost; // 인건비
   var constructRange = (order.ord_range||0) == 0; // 장판 시공범위
-  var minPlateTotal = 280000; // 장판 최소가격
+  var minPlateTotal = CONSTANTS.PRICE.PLATE.MIN; // 장판 최소가격
 
   var paper = null;  // 선택한 벽지정보
   for (i in COST.wlp_cost) {
@@ -58,10 +59,10 @@ const calPrice = function(order, costIsSupply) {
     }
   }
 
+  // 가격 계산 --------------------------------------------------
+
   var paperTotal = 0; // 벽지 최종가격
   var plateTotal = 0; // 장판 최종가격
-
-  // 가격 계산 --------------------------------------------------
 
   // 1. 공급면적, 실면적, 최종면적 구하기
   //  1-1. 천장시공 있는 경우
@@ -128,8 +129,9 @@ const calPrice = function(order, costIsSupply) {
     // 4-2. 장판가격 구하기
     var plt_cost = costIsSupply ? plate.spl_cost : plate.rtl_cost;
     plateTotal = plt_cost * areaPlate;
+    // 4-3. 최소장판가격 검사
     if (plateTotal < minPlateTotal) plateTotal = minPlateTotal;
-    // 4-3. 10000원 이하 절삭
+    // 4-4. 10000원 이하 절삭
     plateTotal = parseInt(plateTotal / 10000) * 10000;
   }
 
